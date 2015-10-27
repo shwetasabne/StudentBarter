@@ -33,3 +33,5 @@ Route::controllers([
 ]);
 
 Route::resource('results', 'SearchResultsController');
+
+Route::resource('product', 'ProductController');

@@ -61,6 +61,25 @@
 	        <!-- /.container-fluid -->
 	    </nav>
 
+	    <section id="productinfo">
+
+	    	<div class="container">
+	    		<div class="row">
+	    			<div class="col-lg-1">
+	    			</div>
+	    			<div class="col-lg-10" style="text-align: center;">
+	    				<h2 class="section-heading">Student Barter</h2>
+	    			<div class="well well-lg">
+
+	    				Look I am in well
+	    			</div>
+	    			</div>
+	    			<div class="col-lg-1">
+	    			</div>
+	    		</div>
+	    	</div>
+	    </section>
+
 		<hr class="light">
 		<footer>
 	        <div class="container">
