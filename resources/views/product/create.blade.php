@@ -23,6 +23,90 @@
 	    <!-- Custom CSS -->
 	    <link rel="stylesheet" href="/../css/creative.css" type="text/css">
 
+		<style>
+			/*body{
+	    		background-color: #525252;
+			}*/
+
+			.centered-form{
+	    		margin-top: 60px;
+			}
+
+			.centered-form .panel{
+	    		background: rgba(255, 255, 255, 0.8);
+	    		box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+			}
+
+
+			/* Basic Style */
+			.form-group {
+	    		position: relative;   
+			}
+
+			.form-group [data-toggle="floatLabel"] {
+	    		height: 44px;
+	    		padding-top: 16px;
+			}
+
+			.form-group [data-toggle="floatLabel"] + label {
+	    		font-size: 12px;
+	    		left: 12px;
+	    		opacity: 1;
+	    		position: absolute;
+	    		top: 3px;
+	    		transition: all 0.3s ease-in-out;
+			}
+
+			.form-group [data-toggle="floatLabel"]:required + label {
+	    		color: rgb(255, 0, 0);
+			}
+
+			/* Custom Styles */
+
+			.form-group.form-group-textarea {
+	    		background-color: rgb(255, 255, 255);
+	    		border-radius: 1px;
+	    		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+	    		margin: 20px 15px ;
+	    		padding: 10px 0px 2px;
+	    		position: relative;
+			}
+
+			.form-group.form-group-textarea textarea {
+	    		height: 34px;
+	    		resize: none;
+			}
+
+			.form-group.form-group-textarea label {
+	    		color: rgb(160, 160, 160);
+	    		font-family: 'Roboto', sans-serif;
+	    		font-size: 12px;
+	    		font-weight: 500;
+			}
+
+			.form-group.form-group-textarea .form-control {
+	    		border-radius: 0px;
+	    		border-width: 0px;
+	    		box-shadow: none;
+			}
+
+			.form-group.form-group-textarea [data-toggle="floatLabel"] + label {
+	    		top: 5px;
+			}
+
+			/* Positioning */
+
+			.form-group [data-toggle="floatLabel"][data-value=""] {
+	    		padding-top: 6px;
+			}
+
+			.form-group [data-toggle="floatLabel"][data-value=""] + label {
+	    		opacity: 0;
+	    		top: 18px;
+			}
+	</style>
+
+
 	</head>
 	<body>
 
@@ -67,12 +151,90 @@
 	    		<div class="row">
 	    			<div class="col-lg-1">
 	    			</div>
-	    			<div class="col-lg-10" style="text-align: center;">
-	    				<h2 class="section-heading">Student Barter</h2>
-	    			<div class="well well-lg">
-
-	    				Look I am in well
-	    			</div>
+	    			<div class="col-lg-10">
+	    				<h2 class="section-heading" style="text-align: center;">Product Info</h2>
+	    				<div class="well well-lg">
+	    					<form class="form-horizontal">
+	    						<div class="form-group">
+	    							<div class="col-lg-3 ">
+      								<label for="title" style="text-align: left;">Title</label>
+      								<input type="text" class="form-control" id="title" placeholder="20 Characters">
+    								</div>
+	    						</div>
+	    						<div class="form-group">
+    							<div class="col-lg-5">
+        							<label for="description" style="text-align: left;">Description</label>
+      								<textarea class="form-control" id="description" name="description" rows="4" placeholder="100 Characters"></textarea>
+      							</div>
+      							</div>
+      							<div class="form-group">
+    							<div class="col-lg-5">
+        							<label for="category" style="text-align: left;">Category</label>
+        							<div class="well well-lg">
+        							</div>
+      							</div>
+      							</div>
+      							<div class="form-group">
+      								<div class="col-lg-5">
+      									<label for="transport" style="text-align: left;">Transport</label>
+      									<!-- <div class="well well-lg"> -->
+      									<div class="container">
+      										<div class="row">
+      											<div style="text-align:left" class="col-lg-2">
+	      											<div class="checkbox">
+	      											<label><input type="checkbox" id="delivery">Delivery</label>
+	      											</div>	
+      											</div>
+      											<div style="text-align:left" class="col-lg-2">
+	      											<div class="checkbox">
+	      											<label><input type="checkbox" id="delivery">Pickup</label>
+	      											</div>
+      											</div>      										
+      										</div>
+      									</div>
+      								</div>
+      							</div>
+      							<div class="form-group">
+      								<div class="col-lg-5">
+      									<label for="pricing" style="text-align: left;">Pricing</label>
+      									<!-- <div class="well well-lg"> -->
+      									<div class="container">
+      										<div class="row">
+      											<div style="text-align:left" class="col-lg-2">
+	      											<div class="checkbox">
+	      											<label><input type="checkbox" id="free">Free</label>
+	      											</div>	
+      											</div>
+      										</div>
+      										<div class="row" style = "padding-top:10px;">
+      											<div style="text-align:left" class="col-lg-1">
+	      											<p style="text-align: left;">Price</p>
+	      										</div>
+	      										<div style="text-align:left;" class="col-lg-2">
+      												<input type="number" class="form-control" min="1" id="price" name="price">
+      											</div>      										
+      										</div>
+      									</div>			
+      								</div>
+      							</div>
+      							<div class="form-group">
+      								<div class="col-lg-10">
+      									<label for="images" style="text-align: left;">Images</label>
+      								</div>
+      							</div>
+      							<div class="form-group">
+      								<div class="col-lg-10">
+      									<label for="keywords" style="text-align: left;">Keywords</label>
+      								</div>
+      								<div class="col-lg-8">
+      									<input type="text" class="form-control" id="keywords" name="keywords" placeholder="Maximum 5 keywords">
+      								</div>
+      							</div>
+      							<div class="form-group">
+      								
+      							</div>
+	    					</form>	
+	    				</div>
 	    			</div>
 	    			<div class="col-lg-1">
 	    			</div>
@@ -117,4 +279,8 @@
 	        </div>
 	    </footer>
 	</body>
+	<script src="./../../public/js/jquery.1.11.2.min.js" type="text/javascript"/>
+	<script>
+	$('#description').characterCounter(200);
+	</script>
 </html>	    
