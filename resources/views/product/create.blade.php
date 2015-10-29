@@ -22,7 +22,7 @@
 
 	    <!-- Custom CSS -->
 	    <link rel="stylesheet" href="/../css/creative.css" type="text/css">
-
+<!--
 		<style>
 			/*body{
 	    		background-color: #525252;
@@ -105,7 +105,18 @@
 	    		top: 18px;
 			}
 	</style>
-
+-->
+	<!-- Chosen jQuery -->
+	<script src="/../js/jquery.js" type="text/javascript"></script>
+	<script src="/../chosen/chosen.jquery.js"></script>
+	<link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
+	
+	<!-- <script src="./../../public/js/jquery.1.11.2.min.js" type="text/javascript"/> -->
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			jQuery(".chosen").data("placeholder","Select Options...").chosen();
+		});
+	</script>
 
 	</head>
 	<body>
@@ -170,8 +181,14 @@
       							<div class="form-group">
     							<div class="col-lg-5">
         							<label for="category" style="text-align: left;">Category</label>
-        							<div class="well well-lg">
-        							</div>
+        							<select class="chosen" multiple="true" style="/*width:400px;*/">
+        								<option></option>
+        								<option>Books</option>
+        								<option>Clothes</option>
+        								<option>Electronics</option>
+        								<option>Furniture</option>
+        								<option>Office Products</option>
+        							</select>
       							</div>
       							</div>
       							<div class="form-group">
@@ -206,6 +223,7 @@
 	      											</div>	
       											</div>
       										</div>
+      										
       										<div class="row" style = "padding-top:10px;">
       											<div style="text-align:left" class="col-lg-1">
 	      											<p style="text-align: left;">Price</p>
@@ -279,8 +297,4 @@
 	        </div>
 	    </footer>
 	</body>
-	<script src="./../../public/js/jquery.1.11.2.min.js" type="text/javascript"/>
-	<script>
-	$('#description').characterCounter(200);
-	</script>
 </html>	    
