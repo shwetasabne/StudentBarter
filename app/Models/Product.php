@@ -39,4 +39,21 @@ class Product extends Model
 		return $items;
     }
 
+    public static function insertProduct($product)
+    {
+
+    	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to insert product data into database");
+
+    	$results = DB::table('products')->insertGetId([
+    				'title' => $product['title'],
+    				'description'	=> $product['description'],
+    				'delivery'	=> $product['delivery'],
+    				'pickup'	=> $product['pickup'],
+    				'price'	=> $product['price'],
+    				'free'		=> $product['free'],
+    				'user_id'	=> "1"
+    			]);
+
+    	return $results;
+    }
 }
