@@ -8,6 +8,7 @@ use Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Models\University;
 
 class AuthController extends Controller
 {
@@ -47,6 +48,7 @@ class AuthController extends Controller
         return Validator::make($data, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
+			'university_id' => 'integer|required|min:2',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -60,21 +62,32 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+		$confirmation_code = str_random(50);
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+			'university_id' => (int) $data['university_id'],
+			'confirmation_code' => $confirmation_code,
         ]);
 
-        Mail::send('email.welcome', $data, function($message) use ($data)
+		$data['confirmation_code'] = $confirmation_code;
+        Mail::send('email.welcome', $data, function($message) use ($user)
             {
-                $message->from('studentbarter@gmail.com', "Site name");
-                $message->subject("Welcome to site name");
-                $message->to('shweta.sabne@gmail.com');
+                $message->from('studentbarter123@gmail.com', "Site name");
+                $message->subject("Welcome to StudenBarter");
+                $message->to($user->email);
             });
 
         return $user;
     }
+
+	public function getRegister()
+	{
+		return view('auth/register', [
+			"university_list" => University::all(),
+		]);
+	}
 
 }

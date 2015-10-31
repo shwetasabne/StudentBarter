@@ -198,8 +198,12 @@
                             <div class="form-group">
 <!--                            	<input type="text" name="univlist" list="univlist" class="form-control input-sm" placeholder="University">
 -->
-				<select class="chosen" style="/*width:400px;*/">
-				    <option>Choose University...</option>
+				<select id="univClear" name="university_id" class="chosen">
+					@foreach ($university_list as $university)
+						<option value={{$university->id}}> {{$university->name}}</option>
+					@endforeach
+
+<!--								    <option>Choose University...</option>
                                     <option>Arizona State University</option>
                                     <option>Auburn University</option>
                                     <option>Baylor College of Medicine</option>
@@ -348,6 +352,7 @@
                                     <option>Wayne State University</option>
                                     <option>Yale University</option>
                                     <option>Yeshiva University</option>
+-->
 				</select>
 <!--			    		<datalist id="univlist" style="width:150px;height:150px;line-height:3em;overflow: scroll;">
 	                        </datalist>
@@ -373,7 +378,7 @@
                         </div>
 
 			<input type="submit" value ="Register" class="btn btn-info btn-block">
-			<a href="javascript:document.getElementById('myform').reset();" style="color:blue; margin: 0 auto; display:block; font-size: 0.8em; text-align: center">Reset</a>
+			<a href="#" id="clearUniv" style="color:blue; margin: 0 auto; display:block; font-size: 0.8em; text-align: center">Reset</a>
 			</form>
                     </div>
                 </div>
@@ -412,7 +417,7 @@
                                     <i class="fa fa-linkedin fa-2x"></i>
                                 </li>
                             </ul>
-                            <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>
+                            <p class="copyright text-muted small">Copyright &copy; Your Company 2015. All Rights Reserved</p>
                         </div>
                     </div>
                 </div>
@@ -421,8 +426,14 @@
 
 
 	<script type="text/javascript">
-	jQuery(document).ready(function(){
-		jQuery(".chosen").chosen();
-	})
+		jQuery(document).ready(function(){
+			jQuery(".chosen").chosen();
+
+		    jQuery("#clearUniv").on("click", function() {
+		        jQuery("#univClear").val('Choose University...').trigger('chosen:updated');;
+				document.getElementById('myform').reset();	
+		    });
+		});
+
 	</script>
 </html>

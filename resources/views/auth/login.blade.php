@@ -71,11 +71,16 @@
 			        </ul>
 			    </div>
 			@endif
+			@if (Session::has('status'))
+				<div class="text-center">
+					<h3>{{ Session::get('status') }}</h3>
+				</div>
+			@endif
 	    	<form class="form-horizontal" role="form" method="POST" action="/auth/login">
 	    	<input type="hidden" name="_token" value="{{ csrf_token() }}"> 
 	    	<div class="container">
 	    		<div class="row">
-	    			<div class="col-lg-4 tex-center">
+	    			<div class="col-lg-4 text-center">
 	    			</div>
 	    			<div class="col-lg-4 text-center">
 	                    <h2 class="section-heading">Student Barter</h2>
