@@ -9,19 +9,25 @@ use DB;
 class Product extends Model
 {
     protected $table = 'products';
-    protected $fillable = ['title', 'description','image_path'];
+    protected $fillable = ['title', 'description','image_path','university_id'];
 
     /*
     * @params : $filter : Array : ("delivery" =>1, "category_id" =>143)
     *		  : $order  : Array : ("updated_at" => "asc", "price" => "desc")
     */
 
-    public static function getSearchedItems($filter, $sort)
+    public static function getSearchedItems($filter, $sort, $university_id)
     {
     	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get the searched items from database");
 
+
     	
 		$items = DB::table('products');
+
+		if($university_id != 1)
+		{
+			$items->where('university_id', $university_id);
+		}
 
 		if(count($filter) > 0)
 		{

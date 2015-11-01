@@ -158,6 +158,11 @@
                             </h5-->
 		    				<div class="well">
 		    					<div class="container">
+									<div class="col-lg-10">
+										@if (!sizeof($items))
+											<h4 style="text-align:center;">No Results Found :-(</h4>
+										@endif
+									</div>
 		    						@foreach (array_chunk($items->getCollection()->all(),3) as $row)
 		    							<div class="row">
 		    								@foreach($row as $item)

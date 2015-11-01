@@ -25,7 +25,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
    
-    private $redirectTo = '/';
+    private $redirectTo = '/results';
    // private $maxLoginAttempts = 10;
     /**
      * Create a new authentication controller instance.
