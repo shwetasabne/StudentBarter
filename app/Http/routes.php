@@ -40,3 +40,6 @@ Route::resource('results', 'SearchResultsController');
 
 Route::resource('product', 'ProductController');
 
+// User Profile routes...
+
+Route::resource('profile', 'UserProfileController');
