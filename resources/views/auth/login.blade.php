@@ -113,6 +113,9 @@
 								    Submit
 								</button>
 							</div>
+							<div class="form-group">
+								<a href="/password/email">Forgot Password</a>
+							</div>
 	                    </div>
 	                    <div class="text-center">
 	                    	<a href="register">Register</a>
