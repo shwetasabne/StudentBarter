@@ -26,6 +26,10 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/verify/{confirmationCode}', [
+    'as' => 'confirmation_path',
+    'uses' => 'Auth\RegistrationController@confirm'
+]);
 
 
 Route::controllers([
@@ -35,3 +39,7 @@ Route::controllers([
 Route::resource('results', 'SearchResultsController');
 
 Route::resource('product', 'ProductController');
+
+// User Profile routes...
+
+Route::resource('profile', 'UserProfileController');

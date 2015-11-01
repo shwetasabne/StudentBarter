@@ -39,4 +39,48 @@ class Product extends Model
 		return $items;
     }
 
+    /*
+    * @params : $sort : Array : ("updated_at" => "desc")
+	* 		  : $user_id : Array : ("user_id" => 1)
+    */
+
+    public static function getUserItems($sort, $user_id)
+    {
+    	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get the User items from database");
+
+    	
+		$items = DB::table('products');
+
+		if(count($user_id) > 0)
+		{
+			foreach ($user_id as $key => $value) {
+				$items->where($key, $value);
+			}
+		}	
+		if(count($sort) > 0)
+		{
+			foreach ($sort as $key => $value) {
+				$items->orderBy($key, $value);
+			}
+		}
+		return $items;
+    }
+
+    public static function insertProduct($product)
+    {
+
+    	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to insert product data into database");
+
+    	$results = DB::table('products')->insertGetId([
+    				'title' => $product['title'],
+    				'description'	=> $product['description'],
+    				'delivery'	=> $product['delivery'],
+    				'pickup'	=> $product['pickup'],
+    				'price'	=> $product['price'],
+    				'free'		=> $product['free'],
+    				'user_id'	=> "1"
+    			]);
+
+    	return $results;
+    }
 }

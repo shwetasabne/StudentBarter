@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\User;
+use DB;
 
-class ProductController extends Controller
+class UserProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +19,27 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-    //    $product_view_id = $request->input('item');
+#		$id = $request->input('user_id');
+		$user_field = "user_id";
+		$user_id = array();
+		$user_id[$user_field] = 6;
 
-    //    $product = Product::getOneProductInfo($product_view_id);
+        $field = "updated_at";
+		$order = "desc";
+        $sort = array();
+		$sort[$field] = $order;
 
-        //Check how many images it has and accordingly set $has_image, $image_count parameters
-        return view('product/index');
+        $items = Product::getUserItems($sort, $user_id);
+		$user  = User::getUserInfo($user_id[$user_field]);
+
+        $sort_date = 1;
+        return view('profile.index', [
+            'items' => $items->paginate(9),
+			'user'  => $user,
+            'sort_date'      => $sort_date,
+            'request'        => $request->all()
+        ]);
+
     }
 
     /**
@@ -32,7 +49,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product/create');
+        //
     }
 
     /**
@@ -44,33 +61,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'title' => 'required|max:20',
-            'description' => 'required|max:100',
-            'category' => 'required',
-        ]);
-
-        $delivery = $request->has('delivery') ? 1 : 0;
-        $pickup   = $request->has('pickup') ? 1 : 0;
-        $free     = $request->has('free') ? 1 : 0;
-        $price    = $request->input('price');
-
-        if (is_null($price)) {
-            $price = 0;
-        }
-
-        $values = [
-            'title'         => $request->input('title'),
-            'description'   => $request->input('description'),
-            'category'      => $request->input('category'),
-            'delivery'      => $delivery,
-            'pickup'        => $pickup,
-            'free'          => $free,
-            'price'         => $price,
-            'keywords'      => $request->input('keywords')
-        ];
-
-        $result = Product::insertProduct($values);
     }
 
     /**

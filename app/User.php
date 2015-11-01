@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Log;
+use DB;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -28,7 +30,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name','email', 'password'];
+    protected $fillable = ['first_name', 'last_name','email', 'password', 'university_id', 'confirmation_code'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -36,4 +38,23 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+	public static function getUserInfo($user_id)
+	{
+        Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get the User information from database");
+
+        if($user_id)
+        {
+#			$user = DB::table('users')->where('id', $user_id)->first();
+			$user = DB::table('users')
+					->join('university', 'users.university_id', '=', 'university.id')
+					->select('users.first_name', 'users.last_name', 'users.created_at', 'university.name')
+					->where('users.id', $user_id)
+					->get();
+        }
+
+		return $user;
+	}
+
+
 }
