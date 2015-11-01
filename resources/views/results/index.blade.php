@@ -164,7 +164,7 @@
 												<div class="col-md-3 itemclick">
 													<div id="<?php echo $item->id; ?>"class='thumbnail'>
 													
-													<img src="{{ $item->primary_image_path }}" alt="{{ $item->title }}">
+													<img src="/../uploads/{{ $item->primary_image_path }}" alt="{{ $item->title }}">
 													<!--div class = "body">
 														{{ $item->description }}
 													</div-->

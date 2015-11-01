@@ -20,12 +20,14 @@ class ProductImageTableSeeder extends Seeder
         foreach(range(1,50) as $product_index)
         {
             $num_entries = rand(0,3);
+            $i = 1;
             foreach(range(0, $num_entries) as $entries)
             {
                 ProductImage::create([
                     'product_id'   => $product_index, 
-                    'image_path'   => $faker->imageUrl(600,450)
+                    'image_path'   => 'image_'.$i.'.jpeg',
                 ]);
+                $i++;
             } 
         }
     }

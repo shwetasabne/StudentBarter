@@ -20,7 +20,7 @@ class ProductTableSeeder extends Seeder
             Product::create([
                 'title'                 => $faker->sentence, 
                 'description'           => $faker->paragraph(4),
-                'primary_image_path'    => $faker->imageUrl(600,450),
+                'primary_image_path'    => 'main_image_'.rand(1,4).'.jpeg',
                 'delivery'              => $faker->boolean(50),
                 'pickup'                => $faker->boolean(50),
                 'free'                  => $faker->boolean(50),

@@ -12,6 +12,52 @@ class Product extends Model
     protected $fillable = ['title', 'description','image_path'];
 
     /*
+    * @params : $filter : Integer : id => $product_id
+    * 
+    */
+
+    public static function getSingleProduct($product_id)
+    {
+    	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get single items from database for ".$product_id);
+
+    	$return_object = array();
+
+    	$item = DB::table('products')
+    				->join('users', 'users.id', '=', 'products.user_id')
+    				->join('university', 'university.id', '=', 'users.university_id')
+    				->select('products.*',
+    						'users.first_name','users.id as user_id', 'users.last_name', 
+    						'university.name as university_name')
+    				->where('products.id', $product_id)
+    				->first();
+    	$return_object['item'] = $item;
+
+    	// Get keywords
+    	$keywords = DB::table('keywords')
+                                ->join('products_keywords', 'products_keywords.keyword_id','=','keywords.id')
+                                ->select('keywords.*')
+    							->where('product_id', $product_id)
+    							->get();
+    	$return_object['keywords'] = $keywords;
+
+    	//Get images
+    	if(is_null($item->primary_image_path) || $item->primary_image_path == '' || empty($product_id))
+    	{
+    		//do nothing and retunr $item from here only    		
+    		$return_object['images'] = array();    		
+    	}
+    	else
+    	{
+    		$product_images = DB::table('products_images')
+    							->where('product_id', $product_id)
+    							->get();
+    		
+    		$return_object['images'] = $product_images;
+    	}
+    	return $return_object;
+    }
+
+    /*
     * @params : $filter : Array : ("delivery" =>1, "category_id" =>143)
     *		  : $order  : Array : ("updated_at" => "asc", "price" => "desc")
     */

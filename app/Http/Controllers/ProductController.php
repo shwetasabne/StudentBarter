@@ -16,13 +16,49 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $product_id = $request->input('item');
+        $product = Product::getSingleProduct($product_id);
+
+        /*Check if there are more images*/
+        if(sizeof($product['images']) <= 0)
+        {
+            $has_more_image =  0;
+        }
+        else
+        {
+            $has_more_image = 1;
+        }
+
+        /* Generate keywords string */
+        $keyword_str = '';
+
+        foreach($product['keywords'] as $key)
+        {
+            $keyword_str.='#'.$key->keyword.' ';
+        }
+
+        /*Denormalize other params*/
+        $delivery = $product['item']->delivery == 1 ? 'Yes' : 'No';
+        $pickup   = $product['item']->pickup   == 1 ? 'Yes' : 'No';
+        $free     = $product['item']->price <= 0 ? 'FREE' : '$'.$product['item']->price;
+
+        return view('product/index',[
+            'item'           => $product['item'],
+            'images'         => $product['images'],
+            'keywords'       => $product['keywords'],
+            'has_more_image' => $has_more_image,
+            'delivery'       => $delivery,
+            'pickup'         => $pickup,
+            'free'           => $free,
+            'keyword_str'    => $keyword_str
+        ]);
 
     //    $product_view_id = $request->input('item');
 
     //    $product = Product::getOneProductInfo($product_view_id);
 
         //Check how many images it has and accordingly set $has_image, $image_count parameters
-        return view('product/index');
+      //  return view('product/index');
     }
 
     /**
