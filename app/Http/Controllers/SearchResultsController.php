@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\User;
+use Auth;
 use DB;
 
 class SearchResultsController extends Controller
@@ -17,6 +19,18 @@ class SearchResultsController extends Controller
      */
     public function index(Request $request)
     {
+
+		$university_id = 1;
+		if($request->input('university_id'))
+		{
+			$university_id = 38;
+		}
+		else if(Auth::check())
+		{
+			$user_id = Auth::id();
+        	$user_univ     = User::getUserInfo($user_id);
+			$university_id = $user_univ->id;
+		}
 
         $delivery_check = $request->has('delivery') ? 1 : 0;
         $pickup_check = $request->has('pickup') ? 1 : 0; 
@@ -74,13 +88,7 @@ class SearchResultsController extends Controller
         }
 
         
-        echo "Filter is \n";
-        var_dump($filter);
-
-        echo "Sort is \n";
-        var_dump($sort);
-
-        $items = Product::getSearchedItems($filter,$sort);
+        $items = Product::getSearchedItems($filter,$sort,$university_id);
 
         return view('results.index', [
             'items' => $items->paginate(9),

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddFkToProductsImagesTable' => $baseDir . '/database/migrations/2015_11_01_022515_add_fk_to_products_images_table.php',
     'AddFkToProductsKeywordsTable' => $baseDir . '/database/migrations/2015_11_01_020621_add_fk_to_products_keywords_table.php',
+    'AddUnivIdProduct' => $baseDir . '/database/migrations/2015_11_01_052027_add_univ_id_product.php',
     'CreateKeywordsTable' => $baseDir . '/database/migrations/2015_10_31_235813_create_keywords_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateProductsImagesTable' => $baseDir . '/database/migrations/2015_11_01_022220_create_products_images_table.php',
@@ -528,6 +529,7 @@ return array(
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UniversityTableSeeder' => $baseDir . '/database/seeds/UniversityTableSeeder.php',
     'UpdateProductsTableUserFk' => $baseDir . '/database/migrations/2015_10_26_071348_update_products_table_user_fk.php',
+    'UpdateProductsUnivIdFk' => $baseDir . '/database/migrations/2015_11_01_052456_update_products_univ_id_fk.php',
     'UpdateUserTable' => $baseDir . '/database/migrations/2015_10_18_201806_update_user_table.php',
     'UpdateUserTableFk' => $baseDir . '/database/migrations/2015_10_18_202639_update_user_table_fk.php',
     'UserTableSeeder' => $baseDir . '/database/seeds/UserTableSeeder.php',
