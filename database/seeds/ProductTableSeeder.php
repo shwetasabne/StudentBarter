@@ -14,14 +14,13 @@ class ProductTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
         
-        Product::truncate();
 
         foreach(range(1,50) as $index)
         {
             Product::create([
                 'title'                 => $faker->sentence, 
                 'description'           => $faker->paragraph(4),
-                'primary_image_path'    => $faker->imageUrl(300,200),
+                'primary_image_path'    => $faker->imageUrl(600,450),
                 'delivery'              => $faker->boolean(50),
                 'pickup'                => $faker->boolean(50),
                 'free'                  => $faker->boolean(50),

@@ -6,7 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFkToProductsImagesTable' => $baseDir . '/database/migrations/2015_11_01_022515_add_fk_to_products_images_table.php',
+    'AddFkToProductsKeywordsTable' => $baseDir . '/database/migrations/2015_11_01_020621_add_fk_to_products_keywords_table.php',
+    'CreateKeywordsTable' => $baseDir . '/database/migrations/2015_10_31_235813_create_keywords_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateProductsImagesTable' => $baseDir . '/database/migrations/2015_11_01_022220_create_products_images_table.php',
+    'CreateProductsKeywordsTable' => $baseDir . '/database/migrations/2015_11_01_000134_create_products_keywords_table.php',
     'CreateProductsTable' => $baseDir . '/database/migrations/2015_10_21_005326_create_products_table.php',
     'CreateUniversityTable' => $baseDir . '/database/migrations/2015_10_18_201628_create_university_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
@@ -83,6 +88,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'KeywordTableSeeder' => $baseDir . '/database/seeds/KeywordTableSeeder.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -478,6 +484,8 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'ProductImageTableSeeder' => $baseDir . '/database/seeds/ProductImageTableSeeder.php',
+    'ProductKeywordTableSeeder' => $baseDir . '/database/seeds/ProductKeywordTableSeeder.php',
     'ProductTableSeeder' => $baseDir . '/database/seeds/ProductTableSeeder.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',

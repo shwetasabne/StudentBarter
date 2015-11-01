@@ -13,9 +13,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       
+
+    //    $product_view_id = $request->input('item');
+
+    //    $product = Product::getOneProductInfo($product_view_id);
+
+        //Check how many images it has and accordingly set $has_image, $image_count parameters
+        return view('product/index');
     }
 
     /**
