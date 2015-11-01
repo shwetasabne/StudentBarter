@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use Mail;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -29,7 +30,7 @@ class AuthController extends Controller
     private $redirectAfterLogout = '/';
     // private $maxLoginAttempts = 10;
 
-    private $redirectTo = '/results';
+    private $redirectTo = '/';
     /**
      * Create a new authentication controller instance.
      *

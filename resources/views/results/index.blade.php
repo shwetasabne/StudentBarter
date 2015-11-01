@@ -74,6 +74,9 @@
 	                    <li>
 	                        <a href="#contact">Contact</a>
 	                    </li>
+						<li>
+							<a href="/auth/logout">Logout</a>
+						</li>
 	                </ul>
 	            </div>
 	            <!-- /.navbar-collapse -->

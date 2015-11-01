@@ -71,23 +71,24 @@
                     <li>
                         <a href="#about">Sell</a>
                     </li>
-                    @if(Auth::check())
+
+					@if($user_id != -1 && $is_active == 1 )
                         <li>Welcome, Shweta</li>
                         <li><a href="/auth/logout">Sign Out</a></li>
-                    @else
-                        <li>
-                            <a href="/auth/login">Sign In</a>
-                        </li>
-                        <li id="signup" >
-                            <a style="
-                            /* border-radius: 3px; */
-                            border: 1px solid;
-                            padding-top: 0px;
-                            padding-bottom: 0px;
-                            float: inherit;
-                        " href="/auth/register">Sign Up</a>
-                        </li>
-                    @endif
+					@else
+						<li>
+							<a href="/auth/login">Sign In</a>
+						</li>
+						<li id="signup" >
+							<a style="
+							/* border-radius: 3px; */
+							border: 1px solid;
+							padding-top: 0px;
+							padding-bottom: 0px;
+							float: inherit;
+						" href="/auth/register">Sign Up</a>
+						</li>
+					@endif
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
