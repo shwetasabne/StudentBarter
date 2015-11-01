@@ -73,6 +73,21 @@
 	        <!-- /.container-fluid -->
 	    </nav>
 
+
+	    <h1>Create Post</h1>
+
+		@if (count($errors) > 0)
+    		<div class="alert alert-danger">
+    		<strong>Whoops!</strong> Errors in your input !!<br><br>
+        	<ul>
+            	@foreach ($errors->all() as $error)
+                	<li>{{ $error }}</li>
+            	@endforeach
+        	</ul>
+    		</div>
+		@endif
+
+
 	    <section id="productinfo">
 
 	    	<div class="container">
@@ -82,23 +97,24 @@
 	    			<div class="col-lg-8">
 	    				<h2 class="section-heading" style="text-align: center;">Product Info</h2>
 	    				<div class="well well-lg">
-	    					<form class="form-horizontal">
+	    					<form id="createForm" role="form" method="POST" action="/product" class="form-horizontal">
+	    						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	    						<div class="form-group">
 	    							<div class="col-lg-6 ">
       								<label for="title" style="text-align: left;">Title</label>
-      								<input type="text" class="form-control" id="title" maxlength="20" placeholder="20 Characters">
+      								<input type="text" class="form-control" id="title" name="title" maxlength="20" placeholder="20 Characters">
     								</div>
 	    						</div>
 	    						<div class="form-group">
     							<div class="col-lg-6">
         							<label for="description" style="text-align: left;">Description</label>
-      								<textarea class="form-control" id="description" maxlength="100" name="description" rows="4" placeholder="100 Characters"></textarea>
+      								<textarea class="form-control" id="description" name="description" maxlength="100" name="description" rows="4" placeholder="100 Characters"></textarea>
       							</div>
       							</div>
       							<div class="form-group">
     							<div class="col-lg-6">
         							<label for="category" style="text-align: left;">Category</label>
-        							<select class="chosen" multiple="true" style="/*width:400px;*/">
+        							<select name="category" class="chosen" multiple="true" style="/*width:400px;*/">
         								<option></option>
         								<option>Books</option>
         								<option>Clothes</option>
@@ -116,12 +132,12 @@
       										<div class="row">
       											<div style="text-align:left" class="col-lg-2">
 	      											<div class="checkbox">
-	      											<label><input type="checkbox" id="delivery">Delivery</label>
+	      											<label><input type="checkbox" id="delivery" name="delivery">Delivery</label>
 	      											</div>	
       											</div>
       											<div style="text-align:left" class="col-lg-2">
 	      											<div class="checkbox">
-	      											<label><input type="checkbox" id="delivery">Pickup</label>
+	      											<label><input type="checkbox" id="pickup" name="pickup">Pickup</label>
 	      											</div>
       											</div>      										
       										</div>
@@ -136,7 +152,7 @@
       										<div class="row">
       											<div style="text-align:left" class="col-lg-2">
 	      											<div class="checkbox">
-	      											<label><input type="checkbox" id="free">Free</label>
+	      											<label><input type="checkbox" id="free" name="free">Free</label>
 	      											</div>	
       											</div>
       										</div>
@@ -146,7 +162,7 @@
 	      											<p style="text-align: left;">Price</p>
 	      										</div>
 	      										<div style="text-align:left;" class="col-lg-2">
-      												<input type="number" class="form-control" min="1" id="price" name="price">
+      												<input type="number" class="form-control" min="1" id="price" name="price" disabled="false">
       											</div>      										
       										</div>
       									</div>			
@@ -167,7 +183,7 @@
       								<div class="col-lg-6" align="center">
       									<button id="Clear" type="button" style="padding-left:10px;">Clear</button>
       									<button id="Preview" type="button" style="padding-left:10px;">Preview</button>
-      									<button id="Submit" type="button" style="padding-left:10px;">Submit</button>
+      									<button id="Submit" type="submit" style="padding-left:10px;">Submit</button>
       								</div>
       							</div>
 	    					</form>	
@@ -216,4 +232,32 @@
 	        </div>
 	    </footer>
 	</body>
+
+	<script type="text/javascript">
+		$('#Submit').on('click', function(){
+			$('#createForm').Submit();
+		});
+
+		$('#free').on('change', function(){
+			if($('#free').is(":checked"))
+			{
+				//document.getElementById('price').disabled = "true";
+				//$('#price').disabled("true");
+			}else{
+				document.getElementById('price').disabled = "false";
+			}
+		});
+
+		// clear the data on the form on form load
+		jQuery(document).ready(function(){
+			document.getElementById('createForm').reset();
+			document.getElementById('price').disabled = "false";	
+		});
+
+		// clear the data on the form 
+		$("#Clear").on('click', function(){
+			document.getElementById('createForm').reset();
+			document.getElementById('price').setAttribute('disabled',false);
+		});
+	</script>
 </html>	    
