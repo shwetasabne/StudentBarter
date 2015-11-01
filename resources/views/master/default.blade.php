@@ -73,10 +73,10 @@
                     </li>
                     @if(Auth::check())
                         <li>Welcome, Shweta</li>
-                        <li>Sign Out</li>
+                        <li><a href="/auth/logout">Sign Out</a></li>
                     @else
                         <li>
-                            <a href="#services">Sign In</a>
+                            <a href="/auth/login">Sign In</a>
                         </li>
                         <li id="signup" >
                             <a style="
@@ -85,7 +85,7 @@
                             padding-top: 0px;
                             padding-bottom: 0px;
                             float: inherit;
-                        " href="#portfolio">Sign Up</a>
+                        " href="/auth/register">Sign Up</a>
                         </li>
                     @endif
                 </ul>

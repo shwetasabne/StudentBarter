@@ -21,6 +21,8 @@ Route::get('/', 'IndexController@index');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+
+// Logout the user
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
@@ -30,7 +32,6 @@ Route::get('auth/verify/{confirmationCode}', [
     'as' => 'confirmation_path',
     'uses' => 'Auth\RegistrationController@confirm'
 ]);
-
 
 Route::controllers([
    'password' => 'Auth\PasswordController',

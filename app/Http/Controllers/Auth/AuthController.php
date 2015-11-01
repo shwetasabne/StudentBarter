@@ -26,7 +26,10 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
    
     private $redirectTo = '/';
-   // private $maxLoginAttempts = 10;
+
+    // Redirect to Master page on logout
+    private $redirectAfterLogout = '/';
+    // private $maxLoginAttempts = 10;
     /**
      * Create a new authentication controller instance.
      *
