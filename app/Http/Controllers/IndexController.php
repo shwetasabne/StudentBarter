@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use App\Models\Product;
+use App\Models\University;
 
 class IndexController extends Controller
 {
@@ -44,13 +46,26 @@ class IndexController extends Controller
 				);
 			}
 		}
+
+        $field = "updated_at";
+        $order = "desc";
+        $sort = array();
+        $sort[$field] = $order;
+		$filter = array();
+		$university_id = 1;
+
+        $items = Product::getSearchedItems($filter, $sort, $university_id);
+
+        $sort_date = 1;
+        return view('master/default', [
+            'items' => $items->paginate(8),
+            'sort_date' => $sort_date,
+#            'request'        => $request->all(),
+			'user_id' => $user_id,
+			'is_active' => $is_active,
+			"university_list" => University::all(),
+        ]);
         
-        return view('master/default', 
-			['user_id' => $user_id,
-			 'is_active' => $is_active
-			]
-		);
-        //
     }
 
 }
