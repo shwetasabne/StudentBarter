@@ -32,57 +32,77 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <script src="js/typeahead.js"></script>
+
 </head>
 
 <body id="page-top">
 
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container-fluid">
-    	<div class="navbar-header">
-      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
-        		<span class="sr-only">Toggle navigation</span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-      		</button>
-      
-      		<a class="navbar-brand" href="http://localhost:8080/test/" title="StudentBarter" rel="home">StudentBarter</a>
-      
-	  		<form class="navbar-form pull-left" role="search" method="get" id="searchform" action="http://localhost:8080/test/">
-				<div class="input-group">
-					<div class="input-group-btn" style="padding-right:5px;">
-						<button type="button" id="searchcategory" value="BLOG" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Category <span class="caret"></span></button>
-		
-        				<ul id="searchdropdown" class="dropdown-menu" role="menu">
-          					<li><a href="javascript:void(0)">BLOG</a></li>
-          					<li><a href="javascript:void(0)">FORUM</a></li>
-          					<li><a href="javascript:void(0)">DOCS</a></li>
-		  					<li class="divider"></li>
-          					<li><a href="javascript:void(0)">Ren</a></li>          
-        				</ul>
-					</div>
-					<div class="input-group-btn">
-					<input type="text" class="form-control" value="" placeholder="Search..." name="s" id="s">
-					<select id="univClear" name="university_id" multiple class="chosen">
-						@foreach ($university_list as $university)
-							<option value={{$university->id}}> {{$university->name}}</option>
-						@endforeach
-					</select>
-						<button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
-					</div>
-				</div>
-    		</form>    
-		</div><!-- /.navbar-header -->
-    	<div class="collapse navbar-collapse upper-navbar">    	 
-      		<ul id="menu-topmenu" class="nav navbar-nav navbar-right">
-      			<li id="menu-item-1"><a href="about">About</a></li>
-				<li id="menu-item-2"><a href="auth/register">Register</a></li>
-				<li class="navbar-form"><button type="submit" onclick="location.href='auth/login'" class="btn btn-default">Sign In</button></li>
-	  		</ul>	  
-     	</div><!-- /.navbar-collapse -->
-	</div>
-</nav>
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="input-group">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#">Another action</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="#">Separated link</a></li>
+                            </ul>
+                          </div><!-- /btn-group -->
+                          <input type="text" class="input-group-lg" aria-label="...">
+                    </div><!-- /input-group -->
+                    <div id="the-basics" class="input-group">
+                        <input class="typeahead" type="text" placeholder="States of USA">
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">Sell</a>
+                    </li>
+
+					@if($user_id != -1 && $is_active == 1 )
+                        <li>Welcome, Shweta</li>
+                        <li><a href="/auth/logout">Sign Out</a></li>
+					@else
+						<li>
+							<a href="/auth/login">Sign In</a>
+						</li>
+						<li id="signup" >
+							<a style="
+							/* border-radius: 3px; */
+							border: 1px solid;
+							padding-top: 0px;
+							padding-bottom: 0px;
+							float: inherit;
+						" href="/auth/register">Sign Up</a>
+						</li>
+					@endif
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 
     <header>
         <div class="header-content">
@@ -102,53 +122,6 @@
         </div>
     </header>
 
-	<section id="products">
-			<div class="container text-center">
-				<div class="row">
-					<div class="col-lg-12 text-center">
-						<h2 class="section-heading">Recently Added Products</h2>
-						<hr class="primary">
-					</div>
-				</div>
-			</div>
-			<div class="container text-center">
-				<div class"row">
-					@foreach (array_chunk($items->getCollection()->all(),4) as $row)
-						<div class="row">
-							@foreach($row as $item)
-								<div class="col-md-3 itemclick">
-									<div id="item-<?php echo $item->id; ?>"class='thumbnail'>
-
-									<img src="{{ $item->primary_image_path }}" alt="{{ $item->title }}">
-									<!--div class = "body">
-										{{ $item->description }}
-									</div-->
-									<h5>{{ $item->id }} {{ $item->title }} {{ $item->updated_at}}</h5>
-									</div>
-								</div>
-							@endforeach
-						</div>
-					@endforeach
-					<a href="results" class="btn btn-primary btn-md" role="button">View More</a>
-				</div>
-			</div>
-	</section>
-
-    <section class="bg-primary" id="about" style="padding-top:40px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">We've got what you need!</h2>
-                    <hr class="light">
-                    <ul class="text-faded">
-                        <li> Carefully reviewed products ensure authenticity</li>
-                        <li> Simple product base keeping in mind students requirements </li>
-                        <li> Real time numbers indicating the interests in your wares</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="services">
         <div class="container">
@@ -181,6 +154,24 @@
                         <h3>Spread the Love</h3>
                         <p class="text-muted">Join us in making this application better!</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">We've got what you need!</h2>
+                    <hr class="light">
+                    <ul class="text-faded">
+                        <li> Carefully reviewed products ensure authenticity</li>
+                        <li> Simple product base keeping in mind students requirements </li>
+                        <li> Real time numbers indicating the interests in your wares</li>
+                    </ul>
+                   
+                    
                 </div>
             </div>
         </div>
@@ -224,10 +215,6 @@
         </div>
     </footer>
 
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -239,16 +226,53 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
 
-	<!-- Chosen jQuery -->
-	<script src="/../chosen/chosen.jquery.js"></script>
-	<link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
+    <script type="text/javascript">
+        var substringMatcher = function(strs) {
+            return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push(str);
+                }
+            });
+
+            cb(matches);
+            };
+        };
+
+        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+            'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+            'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+            'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+            'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+            'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+            'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+            'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+        ];
+
+        jQuery('#the-basics .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'states',
+            source: substringMatcher(states)
+        });
+    </script>
+
 
 </body>
 
-    <script type="text/javascript">
-        jQuery(document).ready(function(){
-            jQuery(".chosen").chosen();
-        });
-    </script>
 
 </html>
