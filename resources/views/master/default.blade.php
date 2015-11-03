@@ -35,6 +35,7 @@
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
+    <!-- Need this to implement twitter typeahead -->
     <script src="js/typeahead.js"></script>
 
 </head>
@@ -72,7 +73,7 @@
                           <input type="text" class="input-group-lg" aria-label="...">
                     </div><!-- /input-group -->
                     <div id="the-basics" class="input-group">
-                        <input class="typeahead" type="text" placeholder="States of USA">
+                        <input id="typeahead" class="typeahead" type="text" placeholder="Choose University">
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
@@ -249,16 +250,16 @@
             };
         };
 
-        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-            'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-            'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-            'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-            'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-            'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-            'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-            'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ];
+        var university_objects = <?php echo json_encode($university_list) ?>;
+        var university_list = [];
+
+        university_objects.forEach( function (university_obj)
+        {
+            university_list.push(university_obj.name);
+        });
+
+        // DB returns first element as 'Choose University...', delete this from universities list
+        delete(university_list[0]);
 
         jQuery('#the-basics .typeahead').typeahead({
             hint: true,
@@ -266,8 +267,8 @@
             minLength: 1
         },
         {
-            name: 'states',
-            source: substringMatcher(states)
+            name: 'university_list',
+            source: substringMatcher(university_list)
         });
     </script>
 
