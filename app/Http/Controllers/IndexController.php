@@ -37,7 +37,7 @@ class IndexController extends Controller
         		#return view('master.default', ['user_id' => $user_id]);
         		#return view('auth/login', ['user_id' => $user_id]);
 				Auth::logout();
-				return view('master/default', 
+				return view('index/index', 
 					['user_id' => $user_id,
 					 'is_active' => $is_active
 					]
@@ -45,7 +45,7 @@ class IndexController extends Controller
 			}
 		}
         
-        return view('master/default', 
+        return view('index/index', 
 			['user_id' => $user_id,
 			 'is_active' => $is_active
 			]
