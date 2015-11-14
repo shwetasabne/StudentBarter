@@ -55,5 +55,21 @@ class User extends Model implements AuthenticatableContract,
 		return $user;
 	}
 
+    /**
+     * Function to check whether user is active or not
+     * params: email_id
+     * return 0,1,fail;
+     */
 
+    public static function getActiveUser($email_id)
+    {
+        Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get user information from database using email_id");
+
+        $active = DB::table('users')
+                    ->select('is_active')
+                    ->where('email', $email_id)
+                    ->first();
+        
+        return $active;
+    }
 }

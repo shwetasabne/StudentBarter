@@ -102,37 +102,37 @@
         </div>
     </header>
 
-    <section id="products">
-            <div class="container text-center">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h2 class="section-heading">Recently Added Products</h2>
-                        <hr class="primary">
-                    </div>
-                </div>
-            </div>
-            <div class="container text-center">
-                <div class"row">
-                    @foreach (array_chunk($items->getCollection()->all(),4) as $row)
-                        <div class="row">
-                            @foreach($row as $item)
-                                <div class="col-md-3 itemclick">
-                                    <div id="item-<?php echo $item->id; ?>"class='thumbnail'>
+	<section id="products">
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading">Recently Added Products</h2>
+						<hr class="primary">
+					</div>
+				</div>
+			</div>
+			<div class="container text-center">
+				<div class"row">
+					@foreach (array_chunk($items->getCollection()->all(),4) as $row)
+						<div class="row">
+							@foreach($row as $item)
+								<div class="col-md-3 itemclick">
+									<div id="item-<?php echo $item->id; ?>"class='thumbnail'>
 
-                                    <img src="{{ $item->primary_image_path }}" alt="{{ $item->title }}">
-                                    <!--div class = "body">
-                                        {{ $item->description }}
-                                    </div-->
-                                    <h5>{{ $item->id }} {{ $item->title }} {{ $item->updated_at}}</h5>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-                    <a href="results" class="btn btn-primary btn-md" role="button">View More</a>
-                </div>
-            </div>
-    </section>
+									<img src="{{ $item->primary_image_path }}" alt="{{ $item->title }}">
+									<!--div class = "body">
+										{{ $item->description }}
+									</div-->
+									<h5>{{ $item->id }} {{ $item->title }} {{ $item->updated_at}}</h5>
+									</div>
+								</div>
+							@endforeach
+						</div>
+					@endforeach
+					<a href="results" class="btn btn-primary btn-md" role="button">View More</a>
+				</div>
+			</div>
+	</section>
 
     <section class="bg-primary" id="about" style="padding-top:40px;">
         <div class="container">

@@ -7,6 +7,7 @@ use Auth;
 use App\User;
 use App\Models\Product;
 use App\Models\University;
+
 class IndexController extends Controller
 {
     /**
@@ -44,17 +45,19 @@ class IndexController extends Controller
         $order = "desc";
         $sort = array();
         $sort[$field] = $order;
-        $filter = array();
-        $university_id = 1;
+		$filter = array();
+		$university_id = 1;
+
         $items = Product::getSearchedItems($filter, $sort, $university_id);
+
         $sort_date = 1;
         return view('master/default', [
             'items' => $items->paginate(8),
             'sort_date' => $sort_date,
 #            'request'        => $request->all(),
-            'user_id' => $user_id,
-            'is_active' => $is_active,
-            "university_list" => University::all(),
+			'user_id' => $user_id,
+			'is_active' => $is_active,
+			"university_list" => University::all(),
         ]);
         
     }
