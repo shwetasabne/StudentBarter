@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
          $this->call(KeywordTableSeeder::class);
          $this->call(ProductImageTableSeeder::class);
          $this->call(ProductKeywordTableSeeder::class);
+         $this->call(CategoryTableSeeder::class);
+         $this->call(ProductCategoryTableSeeder::class);
         Model::reguard();
     }
 }

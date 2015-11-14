@@ -39,6 +39,10 @@ Route::controllers([
 
 Route::resource('results', 'SearchResultsController');
 
+
+Route::post('product/uploads', 'ProductController@uploads');
+Route::post('product/removeuploads', 'ProductController@removeuploads');
+Route::post('product/updatestate', 'ProductController@updatestate');
 Route::resource('product', 'ProductController');
 
 // User Profile routes...
