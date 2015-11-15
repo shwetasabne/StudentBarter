@@ -102,35 +102,59 @@
 		    					<div class="container">
 		    						<div class="row">
 			    						<ul style="list-style-type: none;" class="ul-bring-left">
-			    							<li class="my-cat-all">All Wares</li>
-			    							<li class="my-cat-sub">Furniture</li>
-			    							<li class="my-cat-sub">Home Appliances</li>
-			    							<li class="my-cat-sub">Vehicle</li>
-			    							<li class="my-cat-sub">Vehicle</li>
-			    							<li class="my-cat-sub">Study Tools</li>
-			    							<li class="my-cat-sub">Books</li>
+			    							<li class="my-cat-all" style="padding-left:15px">All Wares</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Furniture</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Home Appliances</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Vehicle</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Vehicle</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Study Tools</li>
+			    							<li class="my-cat-sub" style="padding-left:25px">Books</li>
 			    						</ul>
 		    						</div>
 		    					</div>
 		    					<hr style="max-width:90%">
 		    					<div class="container">
-		    						<div class = "row my-filter-chk">
+		    						<div class="row">
+				                        <div style="text-align:left" class="col-lg-1">
+				                          	<div class="radio">
+				                          		<label><input type="radio" id="new" <?php if($new_check == 1) echo "checked" ;?> class="getradio" name="usage" value="new">New</label>
+				                          	</div>  
+				                        </div>
+				                        <div style="text-align:left" class="col-lg-1">
+				                          	<div class="radio">
+				                          		<label><input type="radio" id="used" <?php if($used_check == 1) echo "checked" ;?> class="getradio" name="usage" value="used">Used</label>
+				                          	</div>
+				                        </div>
+				                        <div style="text-align:left" class="col-lg-1">
+				                          	<div class="radio">
+				                          		<label><input type="radio" id="all" <?php if($all_check == 1) echo "checked" ;?> class="getradio" name="usage" value="all">All</label>
+				                          	</div>
+				                        </div>                           
+				                    </div>
+		    					</div>
+		    					<hr style="max-width:90%">
+		    					<div class="container">
+		    						<div class = "row my-filter-chk" style="padding-left:15px">
 		    							<div class="checkbox">
 		    								<label>
-		    								<input id="delivery" <?php if($delivery_check == 1) echo "checked" ;?> class="getchk" name="delivery" type="checkbox" value="">Delivery
+		    									<input id="delivery" <?php if($delivery_check == 1) echo "checked" ;?> class="getchk" name="delivery" type="checkbox" value="">Delivery
 		    								</label>
 		    							</div>
 		    							<div class="checkbox">
-		    								<label><input id="pickup" <?php if($pickup_check == 1) echo "checked" ;?> class="getchk" name="pickup" type="checkbox" value="">Pick Up</label>
+		    								<label>
+		    									<input id="pickup" <?php if($pickup_check == 1) echo "checked" ;?> class="getchk" name="pickup" type="checkbox" value="">Pick Up
+		    								</label>
 		    							</div>
 		    							<div class="checkbox">
-		    								<label><input id="freeonly" <?php if($freeonly_check == 1) echo "checked" ;?> class="getchk" name="freeonly" type="checkbox" value="">Free Only</label>
+		    								<label>
+		    									<input id="freeonly" <?php if($freeonly_check == 1) echo "checked" ;?> class="getchk" name="freeonly" type="checkbox" value="">Free Only
+		    								</label>
 		    							</div>
 		    						</div>
 		    					</div>
 		    					<hr style="max-width:90%">
 		    					<div class="container">
-		    						<div class = "row my-filter-chk">
+		    						<div class = "row my-filter-chk" style="padding-left:15px">
 										<a href="#"><span>Search in other universities</span></a>
 		    						</div>
 		    					</div>	    					
@@ -159,7 +183,6 @@
 			                            </h5>	
 									</div>
 		    					</div>
-
 		    				</div>
 		    				
                             <!--h5 style="text-align: left;">
@@ -253,7 +276,47 @@
 				if($('#freeonly').is(":checked"))
 				{
 					$('#freeonly').val("true");
+				}
+				if ($('#new').is(":checked")) 
+				{
+					$('#new').val("new");
+				}
+				if ($('#used').is(":checked")) 
+				{
+					$('#used').val("used");
+				}
+				if ($('#all').is(":checked")) 
+				{
+					$('#all').val("all");
 				}				
+				$('#formget').submit();
+			});
+
+			$('.getradio').on('change', function(){
+				if($('#delivery').is(":checked"))
+				{
+					$('#delivery').val("true");
+				}
+				if($('#pickup').is(":checked"))
+				{
+					$('#pickup').val("true");
+				}
+				if($('#freeonly').is(":checked"))
+				{
+					$('#freeonly').val("true");
+				}
+				if ($('#new').is(":checked")) 
+				{
+					$('#new').val("new");
+				}
+				if ($('#used').is(":checked")) 
+				{
+					$('#used').val("used");
+				}
+				if ($('#all').is(":checked")) 
+				{
+					$('#all').val("all");
+				}
 				$('#formget').submit();
 			});
 
@@ -269,6 +332,18 @@
 				if($('#freeonly').is(":checked"))
 				{
 					$('#freeonly').val("true");
+				}
+				if ($('#new').is(":checked")) 
+				{
+					$('#new').val("new");
+				}
+				if ($('#used').is(":checked")) 
+				{
+					$('#used').val("used");
+				}
+				if ($('#all').is(":checked")) 
+				{
+					$('#all').val("all");
 				}	
 				$('#formget').submit();
 			});
