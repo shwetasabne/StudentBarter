@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\University;
 use App\User;
 use Auth;
 use DB;
@@ -35,6 +36,24 @@ class SearchResultsController extends Controller
         $delivery_check = $request->has('delivery') ? 1 : 0;
         $pickup_check = $request->has('pickup') ? 1 : 0; 
         $freeonly_check = $request->has('freeonly') ? 1 : 0;
+
+        // Usage
+        if($request->input('usage') == 'new')
+        {
+            $new = 1;
+            $used = 0;
+            $all = 0;
+        }        
+        else if($request->input('usage') == 'used')
+        {
+            $new = 0;
+            $used = 1;
+            $all = 0;
+        }else{
+            $new = 0;
+            $used = 0;
+            $all = 1;
+        }
 
         $sortfield_value = "";
         if($request->has('sortfield'))
@@ -86,6 +105,14 @@ class SearchResultsController extends Controller
         {
             $filter['free'] = 1;
         }
+        if($new)
+        {
+            $filter['new'] = 1;
+        }
+        if($used)
+        {
+            $filter['used'] = 1;
+        }
 
         
         $items = Product::getSearchedItems($filter,$sort,$university_id);
@@ -95,10 +122,14 @@ class SearchResultsController extends Controller
             'delivery_check' => $delivery_check,
             'pickup_check'   => $pickup_check,
             'freeonly_check' => $freeonly_check,
+            'new_check'      => $new,
+            'used_check'     => $used,
+            'all_check'      => $all,
             'sort_date'      => $sort_date,
             'sort_price_asc' => $sort_price_asc,
             'sort_price_desc' => $sort_price_desc,
-            'request'        => $request->all()
+            'request'        => $request->all(),
+            'university_list' => University::all(),
         ]); 
     }
 
