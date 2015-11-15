@@ -394,6 +394,8 @@
 						alert("failure");
 					}
 				});
+			});
+
 			$('#submit-product').on('click', function(){
 				$('<form action="/product/updatestate" method="POST">' + 
 					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
