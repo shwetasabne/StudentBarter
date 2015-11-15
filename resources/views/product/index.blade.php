@@ -136,6 +136,7 @@
 	        <!-- /.container-fluid -->
 	    </nav>
 	    <section style="padding-top:50px;">
+			<div class="alert alert-success" id="mailsent" style="display: none; text-align: center;">Your mail has been sent!</div>
 
 		    @if($show_expired_div)
 		    	<div class="alert alert-danger">
@@ -263,6 +264,15 @@
 						<div class="modal fade" id="myModal" role="dialog">
 							<div class="modal-dialog">
 								<div class="modal-content">
+									<?php if( !Auth::check() ):?>
+									<div class="modal-header" style="text-align: center; border-color:#337ab7;">
+										<button type="button" class="close" data-dismiss="modal" style="">&times;</button>
+										<h4>Please Login First!</h4>
+										<a href="/auth/login">
+											<input class="btn btn-success" value="Login">
+										</a>
+									</div>
+									<?php else:?>
 									<div class="modal-header" style="color:#fff; background-color:#337ab7; border-color:#337ab7;">
 										<button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
 										<h4 class="modal-title">Contact {!! $item->first_name !!}  {!! $item->last_name!!}</h4>
@@ -280,6 +290,7 @@
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 										<input class="btn btn-success" type="submit" value="Send!" id="submit">
 									</div>
+									<?php endif;?>
 								</div>
 							</div>
 						</div>
@@ -387,8 +398,9 @@
 					url: "/product/interestedmail", //process to mail
 					data: {subject:subject, message:message, productid:productid},
 					success: function(msg){
+						$("#myModal").modal('hide'); //hide popup 
+						$("#mailsent").show();
 //						$("#thanks").html(msg) //hide button and show thank you
-//						$("#form-content").modal('hide'); //hide popup  
 					},
 					error: function(){
 						alert("failure");
