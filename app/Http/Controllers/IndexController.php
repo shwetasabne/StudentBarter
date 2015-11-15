@@ -36,7 +36,7 @@ class IndexController extends Controller
                 Auth::logout();
                 return view('master/default', 
                     ['user_id' => $user_id,
-                     'is_active' => $is_active
+                     'is_active' => $is_active,
 					 'university_list' => University::all(),
                     ]
                 );
