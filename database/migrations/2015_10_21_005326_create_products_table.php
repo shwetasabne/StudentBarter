@@ -21,6 +21,9 @@ class CreateProductsTable extends Migration
             $table->boolean('pickup');
             $table->float('price');
             $table->boolean('free');
+            $table->boolean('new');
+            $table->boolean('used');
+            $table->enum('state',['ACTIVE', 'EXPIRED','PENDING APPROVAL','PRESUBMIT','DELETED'])->default('ACTIVE');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

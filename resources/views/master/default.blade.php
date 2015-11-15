@@ -38,50 +38,50 @@
 
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container-fluid">
-    	<div class="navbar-header">
-      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
-        		<span class="sr-only">Toggle navigation</span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-      		</button>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
       
-      		<a class="navbar-brand" href="http://localhost:8080/test/" title="StudentBarter" rel="home">StudentBarter</a>
+            <a class="navbar-brand" href="http://localhost:8080/test/" title="StudentBarter" rel="home">StudentBarter</a>
       
-	  		<form class="navbar-form pull-left" role="search" method="get" id="searchform" action="http://localhost:8080/test/">
-				<div class="input-group">
-					<div class="input-group-btn" style="padding-right:5px;">
-						<button type="button" id="searchcategory" value="BLOG" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Category <span class="caret"></span></button>
-		
-        				<ul id="searchdropdown" class="dropdown-menu" role="menu">
-          					<li><a href="javascript:void(0)">BLOG</a></li>
-          					<li><a href="javascript:void(0)">FORUM</a></li>
-          					<li><a href="javascript:void(0)">DOCS</a></li>
-		  					<li class="divider"></li>
-          					<li><a href="javascript:void(0)">Ren</a></li>          
-        				</ul>
-					</div>
-					<div class="input-group-btn">
-					<input type="text" class="form-control" value="" placeholder="Search..." name="s" id="s">
-					<select id="univClear" name="university_id" multiple class="chosen">
-						@foreach ($university_list as $university)
-							<option value={{$university->id}}> {{$university->name}}</option>
-						@endforeach
-					</select>
-						<button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
-					</div>
-				</div>
-    		</form>    
-		</div><!-- /.navbar-header -->
-    	<div class="collapse navbar-collapse upper-navbar">    	 
-      		<ul id="menu-topmenu" class="nav navbar-nav navbar-right">
-      			<li id="menu-item-1"><a href="about">About</a></li>
-				<li id="menu-item-2"><a href="auth/register">Register</a></li>
-				<li class="navbar-form"><button type="submit" onclick="location.href='auth/login'" class="btn btn-default">Sign In</button></li>
-	  		</ul>	  
-     	</div><!-- /.navbar-collapse -->
-	</div>
+            <form class="navbar-form pull-left" role="search" method="get" id="searchform" action="http://localhost:8080/test/">
+                <div class="input-group">
+                    <div class="input-group-btn" style="padding-right:5px;">
+                        <button type="button" id="searchcategory" value="BLOG" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Category <span class="caret"></span></button>
+        
+                        <ul id="searchdropdown" class="dropdown-menu" role="menu">
+                            <li><a href="javascript:void(0)">BLOG</a></li>
+                            <li><a href="javascript:void(0)">FORUM</a></li>
+                            <li><a href="javascript:void(0)">DOCS</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)">Ren</a></li>          
+                        </ul>
+                    </div>
+                    <div class="input-group-btn">
+                    <input type="text" class="form-control" value="" placeholder="Search..." name="s" id="s">
+                    <select id="univClear" name="university_id" multiple class="chosen">
+                        @foreach ($university_list as $university)
+                            <option value={{$university->id}}> {{$university->name}}</option>
+                        @endforeach
+                    </select>
+                        <button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </div>
+            </form>    
+        </div><!-- /.navbar-header -->
+        <div class="collapse navbar-collapse upper-navbar">      
+            <ul id="menu-topmenu" class="nav navbar-nav navbar-right">
+                <li id="menu-item-1"><a href="about">About</a></li>
+                <li id="menu-item-2"><a href="auth/register">Register</a></li>
+                <li class="navbar-form"><button type="submit" onclick="location.href='auth/login'" class="btn btn-default">Sign In</button></li>
+            </ul>     
+        </div><!-- /.navbar-collapse -->
+    </div>
 </nav>
 
     <header>
@@ -239,9 +239,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
 
-	<!-- Chosen jQuery -->
-	<script src="/../chosen/chosen.jquery.js"></script>
-	<link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
+    <!-- Chosen jQuery -->
+    <script src="/../chosen/chosen.jquery.js"></script>
+    <link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
 
 </body>
 

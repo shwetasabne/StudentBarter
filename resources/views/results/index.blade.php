@@ -83,7 +83,15 @@
 	        </div>
 	        <!-- /.container-fluid -->
 	    </nav>
+
 	    <section id="now_showing" bgcolor="#F5F3EE">
+
+	    @if(Session::has('status'))
+	    	<div class="alert alert-danger">
+        		<strong>Whoops!</strong> {{ Session::get('status') }} !!<br><br>
+        	</div>
+	    @endif
+
 	    	<form id="formget" role="form" method="GET" action="/results/">
 		    	<div class="container-fluid">
 		    		<div class="row">

@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 use DB;
+use Auth;
+use App\User;
 
 class Product extends Model
 {
     protected $table = 'products';
-    protected $fillable = ['title', 'description','image_path','university_id'];
+    protected $fillable = ['title', 'description', 'delivery', 'pickup', 'price', 'free', 'new', 'used'];
 
     /*
     * @params : $filter : Integer : id => $product_id
@@ -39,6 +41,14 @@ class Product extends Model
     							->where('product_id', $product_id)
     							->get();
     	$return_object['keywords'] = $keywords;
+
+        // Get categories
+        $categories = DB::table('categories')
+                                ->join('products_categories', 'products_categories.category_id','=','categories.id')
+                                ->select('categories.*')
+                                ->where('product_id', $product_id)
+                                ->get();
+        $return_object['product_categories'] = $categories;
 
     	//Get images
     	if(is_null($item->primary_image_path) || $item->primary_image_path == '' || empty($product_id))
@@ -74,6 +84,8 @@ class Product extends Model
 		{
 			$items->where('university_id', $university_id);
 		}
+
+        $items->where('state', 'ACTIVE');
 
 		if(count($filter) > 0)
 		{
@@ -123,16 +135,110 @@ class Product extends Model
 
     	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to insert product data into database");
 
-    	$results = DB::table('products')->insertGetId([
-    				'title' => $product['title'],
-    				'description'	=> $product['description'],
-    				'delivery'	=> $product['delivery'],
-    				'pickup'	=> $product['pickup'],
-    				'price'	=> $product['price'],
-    				'free'		=> $product['free'],
-    				'user_id'	=> "1"
-    			]);
+        #First insert any new keywords
+        $keyword_array = explode(" ", $product['keywords']);
+        $final_key_array = array();
+        foreach ($keyword_array as $key)
+        {
+            $key = substr($key, 1);
+            $inserted_key = Keyword::firstOrCreate(['keyword' => $key]);
+            array_push($final_key_array, $inserted_key->id);
+        }
+
+        #Now retrieve the keyword ids and save them
+        $keywords_from_db = DB::table('keywords')
+                                ->whereIn('id', $final_key_array)
+                                ->get(); 
+   
+        # Get all the filenames in form of an array
+        $filename_array = explode(":", $product['filenamestring']);
+        $primary_image_path='no_image.jpg';
+        if(count ($filename_array) > 0)
+        {
+            $primary_image_path = $filename_array[0];
+        } 
+        # Now that we have all the information, start transaction
+        try {
+            
+            DB::beginTransaction();
+
+            $logged_in_user = Auth::id();
+            $user = User::where('id',$logged_in_user)->first();
+
+            #First insert in the product table
+    	    Log::info(__CLASS__."::".__METHOD__."::"."Attempting to insert product data into database");
+            $product_id  = DB::table('products')->insertGetId([
+                        'title'                     => $product['title'],
+                        'description'               => $product['description'],
+                        'delivery'                  => $product['delivery'],
+                        'pickup'                    => $product['pickup'],
+                        'price'                     => $product['price'],
+                        'free'		                => $product['free'],
+                        'user_id'	                => $logged_in_user, 
+                        'primary_image_path'	    => $primary_image_path,
+                        'new'                       => $product['new'], 
+                        'used'                      => $product['used'],
+                        'state'                     => 'PRESUBMIT',
+                        'university_id'             => $user->university_id
+                    ]);
+    	    
+            Log::info(__CLASS__."::".__METHOD__."::"."Got product id ".$product_id);
+
+            #Now insert products_categories
+            foreach ($product['category'] AS $cat)
+            {
+                Log::info(__CLASS__."::".__METHOD__."::"."Inserting product category ".$product_id.":".$cat);
+                DB::table('products_categories')->insert(
+                    ['product_id' => $product_id, 'category_id' => $cat]
+                );
+            }
+        
+            # Now insert keywors
+            foreach ($keywords_from_db as $keyword_db)
+            {
+
+                Log::info(__CLASS__."::".__METHOD__."::"."Inserting product keyword ".$product_id.":".$keyword_db->id);
+                DB::table('products_keywords')->insert(
+                    ['product_id' => $product_id, 'keyword_id' => $keyword_db->id]
+                );
+            }
+
+            # Now insert the images
+
+            if(count ($filename_array) > 1)
+            {
+                for($i = 1; $i < count($filename_array)-1; $i++)
+                {
+                    
+                    Log::info(__CLASS__."::".__METHOD__."::"."Inserting product image ".$product_id.":".$filename_array[$i]);
+                    DB::table('products_images')->insert(
+                        ['product_id' => $product_id, 'image_path' => $filename_array[$i]]
+                    );
+                }
+            }
+            DB::commit();
+            return $product_id;
+        }
+        catch(Exception $e)
+        {
+            Log::info(__CLASS__."::".__METHOD__."::"."Exception inserting product".$e->message());
+            DB::rollBack();
+            return $e->message();
+        }
 
     	return $results;
     }
+
+    public static function updateState($values)
+    {
+        Log::info(__CLASS__."::".__METHOD__."::"."Attempting to update state of "
+            .$values['id']." to ".$values['state']);
+
+        DB::table('products')
+            ->where('id', $values['id'])
+            ->update(['state' => $values['state']]);
+
+        return true;
+    }
+
 }
