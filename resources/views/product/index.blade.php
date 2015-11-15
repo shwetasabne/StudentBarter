@@ -6,6 +6,14 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="">
 	    <meta name="author" content="">
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
+
+	    <meta property="fb:app_id" content="1434213290179457" />
+	    <meta property="og:url"           content="<?php echo $current_url; ?>" />
+    	<meta property="og:type"          content="website" />
+    	<meta property="og:title"         content="<?php echo $item->title; ?>" />
+    	<meta property="og:description"   content="<?php echo $item->description; ?>" />
+    	<meta property="og:image"         content="url(/../uploads/{!! $item->primary_image_path !!})" />
 
 	    <title>Student Barter</title>
 
@@ -67,6 +75,17 @@
 
 	</head>
 	<body>
+	 	<div id="fb-root"></div>
+    	<script>
+    	(function(d, s, id) {
+		      var js, fjs = d.getElementsByTagName(s)[0];
+		      if (d.getElementById(id)) return;
+		      js = d.createElement(s); js.id = id;
+		      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		      fjs.parentNode.insertBefore(js, fjs);
+		    }(document, 'script', 'facebook-jssdk'));
+    	</script>
+
 			<nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
 	        <div class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
@@ -118,11 +137,46 @@
 	    </nav>
 	    <section style="padding-top:50px;">
 
+		    @if($show_expired_div)
+		    	<div class="alert alert-danger">
+	        		<strong>Whoops!</strong> This product has expired already!!<br><br>
+	        	</div>
+		    @endif
 	    	<div class = "container">
+	    		<div class="row" style="padding-top:20px;">
+	    			@if ($show_edit_button)
+	    			<div class="col-lg-4">
+	    				<button id="edit-product" class="btn btn-primary btn-md">
+	                    	Edit
+	                    </button>
+	    			</div>
+	    			@endif
+	    			@if($show_submit_button)
+		    			<div class="col-lg-4" style="text-align:right;">
+		    				<button id="submit-product" class="btn btn-primary btn-md">
+		                    	Submit
+		                    </button>
+		    			</div>
+		    		@elseif ($show_delete_button)
+		    			<div class="col-lg-4" style="text-align:right;">
+		    				<button id="delete-product" class="btn btn-primary btn-md">
+		                    	Delete
+		                    </button>
+		    			</div>		    		
+	    			@endif
+	    		</div>
 	    		<div class="row">
-	    			<div class="col-lg-8">
+	    			<div class="col-lg-4">
 	    				<h2>{!! $item->title !!}</h2>
 	    			</div>
+	    			@if($item->state == 'ACTIVE')
+		    			<div class="col-lg-4" style="text-align:right;">
+							<div class="fb-share-button" style="margin-top : 30px;"
+							        data-href="<?php echo $current_url; ?>" 
+							        data-layout="button_count">
+							</div>
+		    			</div>
+	    			@endif
 	    		</div>
 				<div class="row">
 					
@@ -194,13 +248,42 @@
 	                    		<div class="panel-footer">
 	                    			<h3 class="panel-title">
 	                    				<button type="submit" class="btn btn-primary btn-md"
-	                    						style="width:100%; margin:0px auto;">
+	                    						style="width:100%; margin:0px auto;" 
+												data-toggle="modal" data-target="#myModal">
+	                    						<?php if($item->state != "ACTIVE") echo "disabled"; ?>
 	                    					Contact Seller
 	                    				</button>
 	                    			</h3>
 	                    		</div>
 	                    	</div>
 	                    </div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header" style="color:#fff; background-color:#337ab7; border-color:#337ab7;">
+										<button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+										<h4 class="modal-title">Contact {!! $item->first_name !!}  {!! $item->last_name!!}</h4>
+									</div>
+									<form class="contact" name="interested">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<div class="modal-body">
+										<input type="text" id="subject" value="I am interested in {!! $item->title !!}" name="subject" class="form-control col-xs-12">
+				                    </div>
+									<div class="modal-body">
+										<textarea name="message" id="message" class="form-control col-xs-12" style="height:400px;">&#13;&#10;Hi {!! $item->first_name !!}, &#13;&#10;&#13;&#10;I am interested in "{!! $item->title !!}" for ${!! $item->price !!} posted on the Student Barter website. &#13;&#10;&#13;&#10;Is the item still available. &#13;&#10;&#13;&#10;Thanks.  &#13;&#10;&#13;&#10; <?php echo URL::full(); ?> </textarea>
+									</div>
+									</form>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<input class="btn btn-success" type="submit" value="Send!" id="submit">
+									</div>
+								</div>
+							</div>
+						</div>
+
 
 	                    <div class="col-lg-4">
 	                    	<div class="panel panel-primary">
@@ -286,7 +369,54 @@
 	</body>
 	<script type="text/javascript">
 		$( document ).ready(function(){
+
 			$('.gallery').gallery();
+
+			$("input#submit").click(function(){
+				$.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+				var subject = $('#subject').val();
+				var message = $('#message').val();
+				var productid = <?php echo $item->id?>;
+				$.ajax({
+					type: "POST",
+					url: "/product/interestedmail", //process to mail
+					data: {subject:subject, message:message, productid:productid},
+					success: function(msg){
+//						$("#thanks").html(msg) //hide button and show thank you
+//						$("#form-content").modal('hide'); //hide popup  
+					},
+					error: function(){
+						alert("failure");
+					}
+				});
+			$('#submit-product').on('click', function(){
+				$('<form action="/product/updatestate" method="POST">' + 
+					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+    				'<input type="hidden" name="id" value="' + <?php echo $item->id; ?> + '">' +
+    				'<input type="hidden" name="state" value="' + "ACTIVE" + '">' +
+    				'</form>').submit();
+			});
+
+			$('#delete-product').on('click', function(){
+				$('<form action="/product/updatestate" method="POST">' + 
+					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+    				'<input type="hidden" name="id" value="' + <?php echo $item->id; ?> + '">' +
+    				'<input type="hidden" name="state" value="' + "DELETED" + '">' +
+    				'</form>').submit();
+			});
+
+			$('#edit-product').on('click', function(){
+				$('<form action="/product/edit" method="GET">' + 
+					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+    				'<input type="hidden" name="id" value="' + <?php echo $item->id; ?> + '">' +
+    				'</form>').submit();
+			});
 		});
-	</script
+
+	</script>
 </html>

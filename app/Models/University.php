@@ -8,5 +8,5 @@ class University extends Model
 {
     protected $table = 'university';
     
-    protected $fillable = ['name', 'city'];
+    //protected $fillable = ['name', 'city'];
 }

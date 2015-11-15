@@ -39,17 +39,16 @@
 
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container-fluid">
-    	<div class="navbar-header">
-      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
-        		<span class="sr-only">Toggle navigation</span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-      		</button>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".upper-navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
       
-      		<a class="navbar-brand" href="http://localhost:8080/test/" title="StudentBarter" rel="home">StudentBarter</a>
-      
+            <a class="navbar-brand" href="http://localhost:8080/test/" title="StudentBarter" rel="home">StudentBarter</a>
 	  		<form class="navbar-form pull-left" role="search" method="get" id="searchform" action="http://localhost:8080/test/">
 				<div class="input-group">
 					<div class="input-group-btn" style="padding-right:5px;">
@@ -237,9 +236,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
 
-	<!-- Chosen jQuery -->
-	<script src="/../chosen/chosen.jquery.js"></script>
-	<link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
+    <!-- Chosen jQuery -->
+    <script src="/../chosen/chosen.jquery.js"></script>
+    <link rel="stylesheet" href="/../chosen/chosen.css" type="text/css">
 
 </body>
 
