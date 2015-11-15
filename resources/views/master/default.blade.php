@@ -18,6 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="css/animate.min.css" type="text/css">
@@ -62,14 +63,10 @@
           					<li><a href="javascript:void(0)">Ren</a></li>          
         				</ul>
 					</div>
-					<div class="input-group-btn">
-					<input type="text" class="form-control" value="" placeholder="Search..." name="s" id="s">
-					<select id="univClear" name="university_id" multiple class="chosen">
-						@foreach ($university_list as $university)
-							<option value={{$university->id}}> {{$university->name}}</option>
-						@endforeach
-					</select>
-						<button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                    			<div class="ui-widget">
+                        
+					    <input type="text" placeholder="Choose University" name="universities" id="universities" />
+					    <button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
 					</div>
 				</div>
     		</form>    
@@ -227,6 +224,7 @@
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -247,7 +245,21 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            jQuery(".chosen").chosen();
+            var university_objects = <?php echo json_encode($university_list) ?>;
+            var university_list = [];
+
+            university_objects.forEach( function (university_obj)
+            {
+                university_list.push(university_obj.name);
+            });
+
+            // DB returns first element as 'Choose University...', delete this from universities list
+	    // delete does not support autocomplete, delete first value from DB side
+            // delete(university_list[0]);
+
+            jQuery("#universities").autocomplete({
+                source: university_list
+            });    
         });
     </script>
 
