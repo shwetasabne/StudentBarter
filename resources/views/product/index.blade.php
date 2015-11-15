@@ -6,6 +6,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="">
 	    <meta name="author" content="">
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 	    <title>Student Barter</title>
 
@@ -194,13 +195,41 @@
 	                    		<div class="panel-footer">
 	                    			<h3 class="panel-title">
 	                    				<button type="submit" class="btn btn-primary btn-md"
-	                    						style="width:100%; margin:0px auto;">
+	                    						style="width:100%; margin:0px auto;" 
+												data-toggle="modal" data-target="#myModal">
 	                    					Contact Seller
 	                    				</button>
 	                    			</h3>
 	                    		</div>
 	                    	</div>
 	                    </div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header" style="color:#fff; background-color:#337ab7; border-color:#337ab7;">
+										<button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+										<h4 class="modal-title">Contact {!! $item->first_name !!}  {!! $item->last_name!!}</h4>
+									</div>
+									<form class="contact" name="interested">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<div class="modal-body">
+										<input type="text" id="subject" value="I am interested in {!! $item->title !!}" name="subject" class="form-control col-xs-12">
+				                    </div>
+									<div class="modal-body">
+										<textarea name="message" id="message" class="form-control col-xs-12" style="height:400px;">&#13;&#10;Hi {!! $item->first_name !!}, &#13;&#10;&#13;&#10;I am interested in "{!! $item->title !!}" for ${!! $item->price !!} posted on the Student Barter website. &#13;&#10;&#13;&#10;Is the item still available. &#13;&#10;&#13;&#10;Thanks.  &#13;&#10;&#13;&#10; <?php echo URL::full(); ?> </textarea>
+									</div>
+									</form>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<input class="btn btn-success" type="submit" value="Send!" id="submit">
+									</div>
+								</div>
+							</div>
+						</div>
+
 
 	                    <div class="col-lg-4">
 	                    	<div class="panel panel-primary">
@@ -287,6 +316,31 @@
 	<script type="text/javascript">
 		$( document ).ready(function(){
 			$('.gallery').gallery();
+
+			$("input#submit").click(function(){
+				$.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+				var subject = $('#subject').val();
+				var message = $('#message').val();
+				var productid = <?php echo $item->id?>;
+				$.ajax({
+					type: "POST",
+					url: "/product/interestedmail", //process to mail
+					data: {subject:subject, message:message, productid:productid},
+					success: function(msg){
+//						$("#thanks").html(msg) //hide button and show thank you
+//						$("#form-content").modal('hide'); //hide popup  
+					},
+					error: function(){
+						alert("failure");
+					}
+				});
+			});
 		});
-	</script
+
+	</script>
 </html>

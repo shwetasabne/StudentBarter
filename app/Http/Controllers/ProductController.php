@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Library\MailHelper;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -59,6 +61,36 @@ class ProductController extends Controller
 
         //Check how many images it has and accordingly set $has_image, $image_count parameters
       //  return view('product/index');
+    }
+
+    /**
+     * Get the information for sending interested email.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function interestedmail(Request $request)
+    {
+		if ($request["subject"])
+		{
+			$subject = $request["subject"];
+		}
+		else
+		{
+			
+		}
+		if ($request["message"])
+		{
+			$message = $request["message"];
+		}
+		else
+		{
+
+		}
+
+		$productid = $request["productid"];
+		$user_id = Auth::id();
+        $mailsent = MailHelper::sendMail($subject, $message, $user_id, $productid);
+		echo "<span class=\"alert alert-success\" >Your message has been sent. Thanks!</span><br><br>";
     }
 
     /**

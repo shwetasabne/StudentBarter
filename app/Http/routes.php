@@ -33,6 +33,10 @@ Route::get('auth/verify/{confirmationCode}', [
     'uses' => 'Auth\RegistrationController@confirm'
 ]);
 
+// Interested Email route...
+
+Route::post('product/interestedmail', 'ProductController@interestedmail');
+
 Route::controllers([
    'password' => 'Auth\PasswordController',
 ]);
@@ -44,3 +48,4 @@ Route::resource('product', 'ProductController');
 // User Profile routes...
 
 Route::resource('profile', 'UserProfileController');
+
