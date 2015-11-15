@@ -22,8 +22,10 @@
 
 	    <!-- Custom CSS -->
 	    <link rel="stylesheet" href="/../css/creative.css" type="text/css">
+	    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 
 	    <script src="/../js/jquery.js"></script>
+	    <script src="js/jquery-ui.js"></script>
 	    <script src="/../js/bootstrap.min.js"></script>
 	    
 		<script src="/../bootstrap-slider/js/bootstrap-slider.js"></script>
@@ -154,10 +156,14 @@
 		    					</div>
 		    					<hr style="max-width:90%">
 		    					<div class="container">
-		    						<div class = "row my-filter-chk" style="padding-left:15px">
-										<a href="#"><span>Search in other universities</span></a>
+		    						<div class = "row my-filter-chk">
+										<label for="universities" style="padding-left:30px;">Search in other universities</label>
 		    						</div>
-		    					</div>	    					
+		    						<div class = "row my-filter-chk ui-widget" style="padding-left:15px">
+									    <input type="text" placeholder="Choose University" name="universities" id="universities" />
+									    <button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+		    						</div>
+		    					</div>	    				
 		    				</div>
 		    			</div>
 		    			<div class="col-lg-9 text-center">
@@ -194,7 +200,12 @@
 		    					<div class="container">
 									<div class="col-lg-10">
 										@if (!sizeof($items))
-											<h4 style="text-align:center;">No Results Found :-(</h4>
+											<h4 style="text-align:center;">Oh Shit !! No Results Found for Selected University :-(</h4>
+											<label for="university">C'mon Lets try another university !</label>
+											<div class = "row my-filter-chk ui-widget" style="padding-left:15px">
+											    <input type="text" placeholder="Choose University" name="university" id="university" />
+											    <button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+				    						</div>
 										@endif
 									</div>
 		    						@foreach (array_chunk($items->getCollection()->all(),3) as $row)
@@ -353,6 +364,26 @@
 				var id = $(this).find(".thumbnail").attr("id");
 				window.location.href = "/product/?item="+id;
 			});
+
+			var university_objects = <?php echo json_encode($university_list) ?>;
+            var university_list = [];
+
+            university_objects.forEach( function (university_obj)
+            {
+                university_list.push(university_obj.name);
+            });
+
+            // DB returns first element as 'Choose University...', delete this from universities list
+	    	// delete does not support autocomplete, delete first value from DB side
+            // delete(university_list[0]);
+
+            jQuery("#universities").autocomplete({
+                source: university_list
+            });
+
+            jQuery("#university").autocomplete({
+                source: university_list
+            });
 		});
 	</script>
 </html>

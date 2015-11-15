@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\University;
 use App\User;
 use Auth;
 use DB;
@@ -127,7 +128,8 @@ class SearchResultsController extends Controller
             'sort_date'      => $sort_date,
             'sort_price_asc' => $sort_price_asc,
             'sort_price_desc' => $sort_price_desc,
-            'request'        => $request->all()
+            'request'        => $request->all(),
+            'university_list' => University::all(),
         ]); 
     }
 
