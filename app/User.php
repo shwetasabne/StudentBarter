@@ -47,7 +47,7 @@ class User extends Model implements AuthenticatableContract,
         {
 			$user = DB::table('users')
 					->join('university', 'users.university_id', '=', 'university.id')
-					->select('users.first_name', 'users.last_name', 'users.created_at', 'university.name', 'university.id','users.is_active','users.email')
+					->select('users.first_name', 'users.last_name', 'users.created_at', 'university.name', 'university.id','users.is_active','users.email', 'users.university_id')
 					->where('users.id', $user_id)
 					->first();
         }
