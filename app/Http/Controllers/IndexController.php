@@ -47,7 +47,7 @@ class IndexController extends Controller
                 #return view('auth/login', ['user_id' => $user_id]);
                 Auth::logout();
         		$sort_date = 1;
-                return view('master/default', 
+                return view('index/index', 
                     ['user_id' => $user_id,
                      'is_active' => $is_active,
 					 'university_list' => University::all(),
@@ -61,7 +61,7 @@ class IndexController extends Controller
         $items = Product::getSearchedItems($filter, $sort, $university_id);
 
         $sort_date = 1;
-        return view('master/default', [
+        return view('index/index', [
             'items' => $items->paginate(8),
             'sort_date' => $sort_date,
 #            'request'        => $request->all(),

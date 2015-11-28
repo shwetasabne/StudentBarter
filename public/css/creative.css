@@ -516,10 +516,16 @@ body {
     -webkit-padding-start: 0px;
 }
 
+.ui-autocomplete {
+    margin-top: 40px !important;
+    top: 0px !important;
+    z-index:99999999999999;
+}
+
 .my-filter-chk {
     padding-bottom: 6px;
     font-size: 13px;
     color: black;
     -webkit-padding-start: 0px;
 }
-}
+

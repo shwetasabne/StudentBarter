@@ -33,7 +33,7 @@ class UserProfileController extends Controller
 		$user  = User::getUserInfo($user_id[$user_field]);
 
         $sort_date = 1;
-        return view('profile.index', [
+        return view('profile.other', [
             'items' => $items->paginate(9),
 			'user'  => $user,
             'sort_date'      => $sort_date,

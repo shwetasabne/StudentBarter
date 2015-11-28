@@ -7,6 +7,7 @@ use Validator;
 use Mail;
 use Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Models\University;
@@ -101,7 +102,7 @@ class AuthController extends Controller
     public function postLogin(Request $request){
 
         $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
+            'email' => 'required|email', 'password' => 'required',
         ]);
 
         $email_id = $request->input('email');
@@ -109,12 +110,19 @@ class AuthController extends Controller
         // Function call to fetch required data from DataBase
         $result = User::getActiveUser($email_id);
 
-        if( is_null($result)){
-            Session::flash('status', "C'mon Yo, Register first !");
-        }else if ( $result->is_active == 0) {
-            Session::flash('status', "Oops ! Looks like you have not verified yet.");
-        }else{
-                 
+        if( is_null($result))
+        {
+           return redirect($this->loginPath())
+               ->withInput($request->only('email', 'password'))
+               ->withErrors(Config::get('messages.not_registered'));
+        }
+        else if ( $result->is_active == 0) 
+        {
+           return redirect($this->loginPath())
+               ->withInput($request->only('email', 'password'))
+               ->withErrors(Config::get('messages.not_active'));
+        }
+        else{
             // If the class is using the ThrottlesLogins trait, we can automatically throttle
             // the login attempts for this application. We'll key this by the username and
             // the IP address of the client making these requests into this application.
@@ -145,5 +153,21 @@ class AuthController extends Controller
         }
         
         return redirect()->intended('auth/login');
+    }
+
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        //Auth::login($this->create($request->all()));
+        $this->create($request->all());
+        Session::flash('success', Config::get('messages.register_success'));
+        return redirect('auth/login')
+            ->withInput($request->only('email'));
     }
 }
