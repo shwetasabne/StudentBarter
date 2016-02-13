@@ -11,7 +11,7 @@ use App\User;
 class Product extends Model
 {
     protected $table = 'products';
-    protected $fillable = ['title', 'description', 'delivery', 'pickup', 'price', 'free', 'new', 'used'];
+    protected $fillable = ['title', 'description', 'delivery', 'pickup', 'price', 'free', 'new', 'used', 'user_id', 'university_id'];
 
     /*
     * @params : $filter : Integer : id => $product_id
@@ -72,27 +72,40 @@ class Product extends Model
     *		  : $order  : Array : ("updated_at" => "asc", "price" => "desc")
     */
 
-    public static function getSearchedItems($filter, $sort, $university_id)
+    public static function getSearchedItems($where, $whereIn, $sort)
     {
     	Log::info(__CLASS__."::".__METHOD__."::"."Attempting to get the searched items from database");
-
-
     	
-		$items = DB::table('products');
+		$items = DB::table('products')
+                    ->select('products.*');    
+        //If where has category_id
+        if(isset ($where['category_id']))
+        {
+            $items
+                ->join('products_categories', 'products_categories.product_id','=','products.id');
+        }
 
-		if($university_id != 1)
+        // whereIn has searchTerms
+        if(isset ($whereIn['keyword_id']))
+        {
+            $items
+                ->join('products_keywords', 'products_keywords.product_id','=','products.id');
+        }
+
+        // Add where clause
+		if(count($where) > 0)
 		{
-			$items->where('university_id', $university_id);
-		}
-
-        $items->where('state', 'ACTIVE');
-
-		if(count($filter) > 0)
-		{
-			foreach ($filter as $key => $value) {
+			foreach ($where as $key => $value) {
 				$items->where($key, $value);
 			}
-		}	
+		}
+
+        if(count($whereIn) > 0)
+        {
+            foreach ($whereIn as $key => $value){
+                $items->whereIn($key, $value);
+            }
+        }	
 		if(count($sort) > 0)
 		{
 			foreach ($sort as $key => $value) {
@@ -100,6 +113,8 @@ class Product extends Model
 				$items->orderBy($key, $value);
 			}
 		}
+        $items->groupBy('products.id');
+
 		return $items;
     }
 

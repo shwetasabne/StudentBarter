@@ -14,9 +14,12 @@
        <div class="navbar-header ui-widget">
            
             <div class="input-group" style="padding-top:10px;">
-                <input type="text"  placeholder="Keywords...">
-                <input type="text" placeholder="Choose University" name="universities" id="universities" />
-                <button type="submit" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                <form id="headerForm" method="GET" action="/results/">
+                    <input type="text" id="searchTerm" name="searchTerm" value="<?php if(isset ($searchTerm)) echo $searchTerm; ?>" placeholder="Keywords...">
+                    <input type="text" placeholder="Choose University" name="university_name" id="university_name" 
+                        value="<?php if(isset ($university_name)) echo $university_name; ?>">
+                    <button type="button" id="searchsubmit" value="Search" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
             </div> 
        </div>            
 

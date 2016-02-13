@@ -20,7 +20,7 @@ class IndexController extends Controller
         $user_id = -1;
         $is_active = 0;
 
-        $field = "updated_at";
+        $field = "products.updated_at";
         $order = "desc";
         $sort = array();
         $sort[$field] = $order;
@@ -58,8 +58,9 @@ class IndexController extends Controller
             }
         }
 
-        $items = Product::getSearchedItems($filter, $sort, $university_id);
-
+        $whereIn = array();
+        $items = Product::getSearchedItems($whereIn, $filter, $sort);
+        
         $sort_date = 1;
         return view('index/index', [
             'items' => $items->paginate(8),

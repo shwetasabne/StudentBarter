@@ -35,6 +35,8 @@
 		    					<hr style="max-width:90%">
 		    					<div class="container">
 		    						<div class="row">
+                                        <input type="hidden" name="searchTerm" value="<?php if(isset ($searchTerm)) echo $searchTerm?>" >
+                                        <input type="hidden" name="university_name" value="<?php if(isset ($university_name)) echo $university_name?>" >
 				                        <div style="text-align:left" class="col-lg-1">
 				                          	<div class="radio">
 				                          		<label><input type="radio" id="new" <?php if($new_check == 1) echo "checked" ;?> class="getradio" name="usage" value="new">New</label>

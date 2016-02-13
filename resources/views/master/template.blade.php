@@ -66,9 +66,17 @@
             });
 
             // DB returns first element as 'Choose University...', delete this from universities list
-            jQuery("#universities").autocomplete({
+            jQuery("#university_name").autocomplete({
                 source: university_list,
+//                select: function(event, ui){
+//                    jQuery("#university_name").val(ui.item.value)
+//                }
             });
+
+            jQuery("#searchsubmit").click(function(){
+                var stringy = jQuery("#searchTerm").val() + " " + jQuery("#university_name").val();
+                $('#headerForm').submit();                
+            })
         });
     </script>
 </html>
