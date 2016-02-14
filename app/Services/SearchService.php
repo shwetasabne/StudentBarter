@@ -57,13 +57,12 @@ class SearchService
             {
                 //$sanitized_keywords = ProfanityFilter::sanitize($request->input('searchTerms'));
                 //$removed_regular_list = RegularWordsRemoval::remove($sanitized_keywords);
-                $removed_regular_list = explode(" ", $request->input('searchTerms'));
+                $removed_regular_list = explode(" ", $request->input('searchTerm'));
+
                 $ks = new KeywordsService();
-                $keyword_id = $ks->getKeywordsByName($removed_regular_list); 
-                if(sizeof($keyword_id) > 0)
-                {
-                    $whereIn['keyword_id'] = $keyword_id;
-                } 
+                $keyword_id = array();
+                $keyword_id = $ks->getKeywordsByName($removed_regular_list);
+                $whereIn['keyword_id'] = $keyword_id;
             }
  
             // Process categories
@@ -74,9 +73,9 @@ class SearchService
 
             // Process university_id
             $us = new UniversitiesService();
-            $university_id = $us->getUniversityIdByName($request->input('university_name')); 
-            if($request->has('university_id'))
+            if($request->has('university_name'))
             {
+                $university_id = $us->getUniversityIdByName($request->input('university_name')); 
                 $where['university_id'] = $university_id;
             }
     

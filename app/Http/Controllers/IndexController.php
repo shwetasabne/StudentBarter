@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use App\Services\SearchService;
 use App\User;
 use App\Models\Product;
 use App\Models\University;
@@ -46,7 +48,16 @@ class IndexController extends Controller
         }
 
         $whereIn = array();
-        $items = Product::getSearchedItems($whereIn, $filter, $sort);
+       
+        $request = new Request(); 
+        $ss = new SearchService();
+        $output =  $ss->searchItemsAlgoOne($request);
+        $items = $output['data']; 
+        if(!$output['status'])
+        {
+            print_r("Error occurred getting results " . $output['data']);
+            return;
+        }
        
         $sort_date = 1;
         return view('index/index', [

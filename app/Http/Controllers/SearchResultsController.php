@@ -78,7 +78,7 @@ class SearchResultsController extends Controller
             default:
                 $sort_date = 1;
         }
-        $items = $output['data']; 
+        $items = $output['data'];
         return view('results.index', [
             'items' => $items->paginate(9),
             'delivery_check' => ($request->has('delivery') ? 1 : 0),
