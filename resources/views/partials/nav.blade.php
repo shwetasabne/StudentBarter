@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+            <a class="navbar-brand page-scroll" href="/">Start Bootstrap</a>
         </div>
 
        <div class="navbar-header ui-widget">

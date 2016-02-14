@@ -22,19 +22,39 @@
 		    					<div class="container">
 		    						<div class="row">
 			    						<ul style="list-style-type: none;" class="ul-bring-left">
-			    							<li class="my-cat-all" style="padding-left:15px">All Wares</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Furniture</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Home Appliances</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Vehicle</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Vehicle</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Study Tools</li>
-			    							<li class="my-cat-sub" style="padding-left:25px">Books</li>
+
+                                            <?php if($category_id == -1): ?>
+                                                <li class="my-cat-all" style="padding-left:15px">
+                                                    <a href="#" class="catlink my-cat-all" id="-1">All Wares </a>
+                                                </li>
+                                            <?php else: ?>
+                                                <li class="my-cat-sub" style="padding-left:15px">
+                                                    <a href="#" class="catlink my-cat-sub" id="-1">All Wares </a>
+                                                </li>
+                                            <?php endif; ?>
+
+                                            <?php foreach ($category_list as $category): ?>
+                                                <?php if($category_id == $category->id): ?>
+                                                    <li class="my-cat-all" style="padding-left:15px">
+                                                        <a href="#" class="catlink my-cat-all" id="<?php echo $category->id;?>">
+                                                            <?php echo $category->name; ?>
+                                                        </a>
+                                                    </li>
+                                                <?php else: ?>
+                                                    <li class="my-cat-sub" style="padding-left:15px">
+                                                        <a href="#" class="catlink my-cat-sub" id="<?php echo $category->id;?>">
+                                                            <?php echo $category->name; ?>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
 			    						</ul>
 		    						</div>
 		    					</div>
 		    					<hr style="max-width:90%">
 		    					<div class="container">
 		    						<div class="row">
+                                        <input type="hidden" name="category_id" id="category_id">
                                         <input type="hidden" name="searchTerm" value="<?php if(isset ($searchTerm)) echo $searchTerm?>" >
                                         <input type="hidden" name="university_name" value="<?php if(isset ($university_name)) echo $university_name?>" >
 				                        <div style="text-align:left" class="col-lg-1">
@@ -91,9 +111,8 @@
 		    					<div class="row">
 									<div class="col-lg-4">
 										<h5 style="text-align: left;">
-					    					<span><a href="#">Furniture</a></span>
-					    					<span>  </span>>
-					    					<span> Chairs </span>
+					    					<span>Showing results for: </span>
+					    					<span><?php echo $searchTerm; ?></span>
 					    				</h5>
 									</div>
 									<div class = "col-lg-1">
@@ -158,6 +177,8 @@
 	<script type="text/javascript">
 		$( document ).ready(function(){
 			$('.getchk').on('change', function(){
+                var cat_id = $('.catlink').attr('id');
+                $('#category_id').val(cat_id);
 				if($('#delivery').is(":checked"))
 				{
 					$('#delivery').val("true");
@@ -186,6 +207,8 @@
 			});
 
 			$('.getradio').on('change', function(){
+                var cat_id = $(this).attr('id');
+                $('#category_id').val(cat_id);
 				if($('#delivery').is(":checked"))
 				{
 					$('#delivery').val("true");
@@ -214,6 +237,8 @@
 			});
 
 			$('select').on('change',function(){
+                var cat_id = $(this).attr('id');
+                $('#category_id').val(cat_id);
 				if($('#delivery').is(":checked"))
 				{
 					$('#delivery').val("true");
@@ -240,6 +265,36 @@
 				}	
 				$('#formget').submit();
 			});
+
+            $('.catlink').on('click', function(){
+                var cat_id = $(this).attr('id');
+                $('#category_id').val(cat_id);
+				if($('#delivery').is(":checked"))
+				{
+					$('#delivery').val("true");
+				}
+				if($('#pickup').is(":checked"))
+				{
+					$('#pickup').val("true");
+				}
+				if($('#freeonly').is(":checked"))
+				{
+					$('#freeonly').val("true");
+				}
+				if ($('#new').is(":checked")) 
+				{
+					$('#new').val("new");
+				}
+				if ($('#used').is(":checked")) 
+				{
+					$('#used').val("used");
+				}
+				if ($('#all').is(":checked")) 
+				{
+					$('#all').val("all");
+				}
+				$('#formget').submit();
+            })
 
 			$('.itemclick').on('click', function(){
 				//alert($(this).find(".thumbnail").attr("id"));

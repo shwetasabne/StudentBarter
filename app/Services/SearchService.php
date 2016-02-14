@@ -57,7 +57,7 @@ class SearchService
             {
                 //$sanitized_keywords = ProfanityFilter::sanitize($request->input('searchTerms'));
                 //$removed_regular_list = RegularWordsRemoval::remove($sanitized_keywords);
-                $removed_regular_list = ["deserunt"];
+                $removed_regular_list = explode(" ", $request->input('searchTerms'));
                 $ks = new KeywordsService();
                 $keyword_id = $ks->getKeywordsByName($removed_regular_list); 
                 if(sizeof($keyword_id) > 0)
@@ -67,7 +67,7 @@ class SearchService
             }
  
             // Process categories
-            if($request->has('category_id'))
+            if($request->has('category_id') && $request->input('category_id') != -1)
             {
                 $where['category_id'] = $request->input('category_id');
             }

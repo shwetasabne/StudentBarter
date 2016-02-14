@@ -251,7 +251,9 @@
 	                    		<div class="panel-body">
 	                    			{!! $item->description !!}
 	                    			<hr id="#car #book #vehicle" class="hash" style="border-color:lightgrey; max-width:100%; border-width:1px;"/>
-	                    			Keywords : {!! $keyword_str !!}
+	                    			Keywords: {!! $keyword_str !!}
+	                    			<hr class="hash" style="border-color:lightgrey; max-width:100%; border-width:1px;"/>
+	                    			Categories: {!! $category_str !!}
 	                    		</div>
 	                    	</div>
 	                    </div>

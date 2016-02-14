@@ -79,7 +79,12 @@ class ProductController extends Controller
             $keyword_str.='#'.$key->keyword.' ';
         }
 
-
+        $category_str = '';
+        foreach($product['product_categories'] as $key)
+        {
+            $category_str.=$key->name.' ';
+        }
+        
         /*Denormalize other params*/
         $delivery = $product['item']->delivery == 1 ? 'Yes' : 'No';
         $pickup   = $product['item']->pickup   == 1 ? 'Yes' : 'No';
@@ -96,6 +101,7 @@ class ProductController extends Controller
             'pickup'         => $pickup,
             'free'           => $free,
             'keyword_str'    => $keyword_str,
+            'category_str'   => $category_str,
             'show_edit_button' => $show_edit_button,
             'show_delete_button' => $show_delete_button,
             'show_submit_button' => $show_submit_button,

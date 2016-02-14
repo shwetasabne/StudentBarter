@@ -35,32 +35,19 @@ class IndexController extends Controller
             $active  	= $user->is_active;
             $university_id  = $user->university_id;
             $is_active  	= $user->is_active;
-
-        	$items = Product::getSearchedItems($filter, $sort, $university_id);
-
+            
             if($active) {
-                return redirect()->intended('/results');
+        //        return redirect()->intended('/results');
             }
             else
             {
-                #return view('master.default', ['user_id' => $user_id]);
-                #return view('auth/login', ['user_id' => $user_id]);
                 Auth::logout();
-        		$sort_date = 1;
-                return view('index/index', 
-                    ['user_id' => $user_id,
-                     'is_active' => $is_active,
-					 'university_list' => University::all(),
-            		 'items' => $items->paginate(8),
-					 'sort_date' => $sort_date,
-                    ]
-                );
             }
         }
 
         $whereIn = array();
         $items = Product::getSearchedItems($whereIn, $filter, $sort);
-        
+       
         $sort_date = 1;
         return view('index/index', [
             'items' => $items->paginate(8),
