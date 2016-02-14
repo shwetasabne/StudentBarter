@@ -15,13 +15,17 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
          $this->call(UniversityTableSeeder::class);
-         $this->call(UserTableSeeder::class);
-         $this->call(ProductTableSeeder::class);
-         $this->call(KeywordTableSeeder::class);
-         $this->call(ProductImageTableSeeder::class);
-         $this->call(ProductKeywordTableSeeder::class);
          $this->call(CategoryTableSeeder::class);
-         $this->call(ProductCategoryTableSeeder::class);
+
+         if(App::environment('local', 'staging', 'qa'))
+         {
+             $this->call(UserTableSeeder::class);
+             $this->call(ProductTableSeeder::class);
+             $this->call(KeywordTableSeeder::class);
+             $this->call(ProductImageTableSeeder::class);
+             $this->call(ProductKeywordTableSeeder::class);
+             $this->call(ProductCategoryTableSeeder::class);
+         }
         Model::reguard();
     }
 }

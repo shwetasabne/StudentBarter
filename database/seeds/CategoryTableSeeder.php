@@ -12,11 +12,23 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-        foreach(range(1,25) as $index)
+
+        Category::create([
+			'id'		   => 0,
+            'name'         => "All Wares" 
+        ]);
+
+        $category_names = array(
+            "Furniture",
+            "Home Appliances",
+            "Vehicles",
+            "Study Materials",
+            "Books"
+        );
+        foreach($category_names as $category)
         {
             Category::create([
-                'name' => $faker->word, 
+                'name' => $category
             ]);
         }
     }

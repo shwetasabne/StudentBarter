@@ -19,12 +19,12 @@ class ProductCategoryTableSeeder extends Seeder
         //For each product we will be inserting random number of keywords
         foreach(range(1,50) as $product_index)
         {
-            $num_entries = rand(0,7);
+            $num_entries = rand(0,3);
             foreach(range(0, $num_entries) as $entries)
             {
                 ProductCategory::create([
                     'product_id'   => $product_index, 
-                    'category_id'   => rand(1,25)
+                    'category_id'   => rand(1,5)
                 ]);
             } 
         }
