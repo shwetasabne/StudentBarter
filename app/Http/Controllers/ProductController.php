@@ -56,6 +56,12 @@ class ProductController extends Controller
             return redirect('results')
                     ->with('status','Sorry! Product  not found');
         }
+        
+        $show_deleted_div = 0;
+        if($logged_in_user_id == $product_owner && $product['item']->state == 'DELETED')
+        {
+            $show_deleted_div = 1; 
+        }
 
         $show_expired_div = ($product['item']->state == 'EXPIRED') ? 1: 0;
 
@@ -105,6 +111,7 @@ class ProductController extends Controller
             'show_edit_button' => $show_edit_button,
             'show_delete_button' => $show_delete_button,
             'show_submit_button' => $show_submit_button,
+            'show_deleted_div' => $show_deleted_div,
             'show_expired_div' => $show_expired_div,
             'current_url'   => $current_url,
         ]);
@@ -249,7 +256,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request)
     {
-                $categories = Category::where('is_active', '=', 1)->get();
+        $categories = Category::where('is_active', '=', 1)->get();
         return view('product/create',['categories' => $categories]);
        
         /*

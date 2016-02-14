@@ -57,6 +57,11 @@
 	    <section style="padding-top:50px;">
 			<div class="alert alert-success" id="mailsent" style="display: none; text-align: center;">Your mail has been sent!</div>
 
+		    @if($show_deleted_div)
+		    	<div class="alert alert-danger">
+	        		<strong>Whoops!</strong>This product has been deleted!!<br><br>
+	        	</div>
+		    @endif
 		    @if($show_expired_div)
 		    	<div class="alert alert-danger">
 	        		<strong>Whoops!</strong> This product has expired already!!<br><br>
@@ -309,10 +314,11 @@
 			});
 
 			$('#edit-product').on('click', function(){
-				$('<form action="/product/edit" method="GET">' + 
-					'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-    				'<input type="hidden" name="id" value="' + <?php echo $item->id; ?> + '">' +
-    				'</form>').submit();
+			    alert("This is pending.. ")
+            //	$('<form action="/product/edit" method="GET">' + 
+			//		'<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+    		//		'<input type="hidden" name="id" value="' + <?php echo $item->id; ?> + '">' +
+    		//		'</form>').submit();
 			});
 		});
 

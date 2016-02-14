@@ -157,7 +157,7 @@
 													<!--div class = "body">
 														{{ $item->description }}
 													</div-->
-													<h5>{{ $item->id }} {{ $item->title }} {{ $item->updated_at}}</h5>
+													<h5>{{ $item->title }} ${{ $item->price}}</h5>
 													</div>
 												</div>
 											@endforeach
